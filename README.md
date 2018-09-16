@@ -28,7 +28,7 @@ npm install
 
 2. Select one: `localhost:3000/api/drivers/{number}`
 
-3. Create: `curl --data "id=2name=LaoSiJi&age=37&sex=male&carNumber=A1234" \
+3. Create: `curl --data "id=2&name=LaoSiJi&age=37&sex=male&carNumber=A1234" \
 localhost:3000/api/drivers`
 
 4. Update: `curl -X PUT --data "name=MaLuShaShou&age=20&sex=male&carNumber=D8888" \

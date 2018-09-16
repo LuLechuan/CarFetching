@@ -10,5 +10,4 @@ router.post('/api/drivers', db.createDriver);
 router.put('/api/drivers/:id', db.updateDriver);
 router.delete('/api/drivers/:id', db.removeDriver);
 
-
 module.exports = router;

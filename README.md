@@ -12,14 +12,13 @@
 
 6. Git clone this repo
 
-7. Go to the repo's directory, run the following:
+7. Go to the repo's directory, run the following to install the dependencies.:
 
 ```
 npm install
 ```
-to install the dependencies.
 
-7. Run `npm start`
+8. Run `npm start`
 
 ## How to call the functions
 

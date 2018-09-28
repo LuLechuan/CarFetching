@@ -10,4 +10,4 @@ CREATE TABLE drivers (
 );
 
 INSERT INTO drivers (id, name, age, sex, carNumber)
-  VALUES ('21', 'Ahchuang', 22, 'male', 'D123');
+  VALUES ('2', 'Ahchuang2', 22, 'male', 'D123');

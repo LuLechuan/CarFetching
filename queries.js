@@ -6,7 +6,7 @@ var options = {
 };
 
 var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://localhost:5432/postgres';
+var connectionString = 'postgres://postgres:123@localhost:5432/postgres';
 var db = pgp(connectionString);
 
 // add query functions

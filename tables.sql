@@ -11,11 +11,11 @@ CREATE TABLE users (
   role VARCHAR(10) NOT NULL check(role = 'admin' OR role = 'driver' OR role = 'passenger')
 );
 
--- INSERT INTO users (username, password, name, age, sex, role)
--- VALUES ("Ahchuang", "123456", "LC", 23, "male", "driver");
---
--- INSERT INTO users u (u.username, u.password, u.name, u.age, u.sex, u.role)
--- VALUES ("Samuel", "654321", "SL", 17, "male", "passenger");
+INSERT INTO users VALUES ('Ahchuang', '123456', 'LC', 23, 'male', 'driver');
+
+INSERT INTO users VALUES ('Samuel', '654321', 'SL', 17, 'male', 'passenger');
+
+INSERT INTO users VALUES ('admin', 'admin', 'admin', 20, 'male', 'admin');
 
 DROP TABLE IF EXISTS cars CASCADE;
 CREATE TABLE cars (
@@ -26,7 +26,11 @@ CREATE TABLE cars (
   FOREIGN KEY (driver) REFERENCES users(username) ON DELETE CASCADE
 );
 
--- INSERT INTO cars values ("A012324M", "Ahchuang", "6", "Toyota");
+ INSERT INTO cars values ('A012324M', 'Ahchuang', '6', 'Toyota');
+
+ INSERT INTO cars values ('A345678M', 'Samuel', '4', 'Tesla S');
+
+ INSERT INTO cars values ('A876543M', 'Samuel', '6', 'Tesla X');
 
 DROP TABLE IF EXISTS rides CASCADE;
 CREATE TABLE rides (
@@ -41,7 +45,10 @@ CREATE TABLE rides (
   FOREIGN KEY (car) REFERENCES cars(plate_number)
 );
 
--- INSERT INTO rides values ("A012324M", "2017-07-23", "Buona Vista", "Bedok", 1, "pending");
+INSERT INTO rides values ('A012324M', '2017-07-23', 'Buona_Vista', 'Bedok', 1, 'pending');
+
+INSERT INTO rides values ('A012324M', '2017-07-22', 'Buona_Vista', 'Bedok', 1, 'success');
+
 
 DROP TABLE IF EXISTS bids;
 CREATE TABLE bids (
@@ -57,4 +64,4 @@ CREATE TABLE bids (
   FOREIGN KEY (car, start_time, source, destination) REFERENCES rides(car, start_time, source, destination) ON DELETE CASCADE
 );
 
--- INSERT INTO bids values ("Samuel", "A012324M", "2017-07-23", "Buona Vista", "Bedok", 20, "pending");
+ INSERT INTO bids values ('Samuel', 'A012324M', '2017-07-23', 'Buona_Vista', 'Bedok', 20, 'pending');

@@ -16,7 +16,7 @@ const rides = require('./routes/rides');
 const bids = require('./routes/bids');
 const passengers = require('./routes/passengers');
 
-// view engine setup
+// view engine , a trial
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 

@@ -1,14 +1,4 @@
-var promise = require('bluebird');
-
-var options = {
-  // Initialization Options
-  promiseLib: promise
-};
-
-var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://localhost:5432/postgres';
-var db = pgp(connectionString);
-
+var db = require('./db_connection');
 // add query functions
 
 module.exports = {
@@ -22,12 +12,16 @@ module.exports = {
 function getAllDrivers(req, res, next) {
   db.any('SELECT * From drivers')
     .then(function (data) {
-      res.status(200)
-        .json({
-          status: 'success',
-          data: data,
-          message: 'Retrieved ALL Drivers'
-        });
+      const names = data.map(d => d.name);
+      // res.status(200).send(names);
+      // res.status(200)
+      //   .json({
+      //     status: 'success',
+      //     data: data,
+      //     message: 'Retrieved ALL Drivers'
+      //   });
+      console.log(names);
+      res.render('driver', {names: names});
     })
     .catch(function (err) {
       return next(err);

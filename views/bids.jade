@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h2 All bids
+  ul
+    each source, i in sources
+      li
+        a(href="#") #{source}

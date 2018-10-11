@@ -11,6 +11,12 @@ CREATE TABLE users (
   role VARCHAR(10) NOT NULL check(role = 'admin' OR role = 'driver' OR role = 'passenger')
 );
 
+-- INSERT INTO users (username, password, name, age, sex, role)
+-- VALUES ("Ahchuang", "123456", "LC", 23, "male", "driver");
+--
+-- INSERT INTO users u (u.username, u.password, u.name, u.age, u.sex, u.role)
+-- VALUES ("Samuel", "654321", "SL", 17, "male", "passenger");
+
 DROP TABLE IF EXISTS cars CASCADE;
 CREATE TABLE cars (
   plate_number CHAR(8) PRIMARY KEY,
@@ -19,6 +25,8 @@ CREATE TABLE cars (
   model VARCHAR(64),
   FOREIGN KEY (driver) REFERENCES users(username) ON DELETE CASCADE
 );
+
+-- INSERT INTO cars values ("A012324M", "Ahchuang", "6", "Toyota");
 
 DROP TABLE IF EXISTS rides CASCADE;
 CREATE TABLE rides (
@@ -33,6 +41,8 @@ CREATE TABLE rides (
   FOREIGN KEY (car) REFERENCES cars(plate_number)
 );
 
+-- INSERT INTO rides values ("A012324M", "2017-07-23", "Buona Vista", "Bedok", 1, "pending");
+
 DROP TABLE IF EXISTS bids;
 CREATE TABLE bids (
   passenger VARCHAR(128),
@@ -46,3 +56,5 @@ CREATE TABLE bids (
   FOREIGN KEY (passenger) REFERENCES users(username) ON DELETE CASCADE,
   FOREIGN KEY (car, start_time, source, destination) REFERENCES rides(car, start_time, source, destination) ON DELETE CASCADE
 );
+
+-- INSERT INTO bids values ("Samuel", "A012324M", "2017-07-23", "Buona Vista", "Bedok", 20, "pending");

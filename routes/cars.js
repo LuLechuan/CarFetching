@@ -3,26 +3,26 @@ const router = express.Router();
 const db = require('../db_connection');
 
 router.get('/', (req, res, next) => {
-    db.any('SELECT * FROM users')
+    db.any('SELECT * FROM cars')
         .then((data) => {
-            const users = data;
-            console.log(users);
-            res.render('users', {users: users});
+            const cars = data;
+            console.log(cars);
+            res.render('cars', {cars : cars});
         })
         .catch((err) => {
             return next(err);
         });
 });
 
-router.get('/:username', (req, res, next) => {
-    const username = req.params.username;
-    db.one('SELECT * FROM users WHERE username = ($1)', username)
+router.get('/:number', (req, res, next) => {
+    const plate_number = req.params.number;
+    db.one('SELECT * FROM cars WHERE plate_number = ($1)', plate_number)
         .then(data => {
             res.status(200)
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'Retrieved a user'
+                    message: 'Retrieved a car'
                 });
         })
         .catch(err => {
@@ -30,14 +30,13 @@ router.get('/:username', (req, res, next) => {
         });
 });
 
-router.post('/', function(req, res, next) {
-    console.log(req.body.username);
-    db.none('INSERT INTO users VALUES(${username}, ${password}, ${name}, ${age}, ${sex}, ${role})', req.body)
+router.post('/', (req, res, next) => {
+    db.none('INSERT INTO cars VALUES(${plate_number}, ${driver}, ${capacity}, ${model})', req.body)
         .then(() => {
             res.status(200)
                 .json({
                     status: 'success',
-                    message: 'Inserted one user'
+                    message: 'Inserted one car'
                 });
         })
         .catch((err) => {
@@ -45,15 +44,14 @@ router.post('/', function(req, res, next) {
         });
 });
 
-router.put('/:username', (req, res, next) =>{
-    db.none('UPDATE users SET password= $1, name=$2, age=$3, sex=$4, role=$5 where username=$5',
-        [req.body.password, req.body.name, req.body.age,
-            req.body.sex, req.body.role, req.params.username])
+router.put('/:number', (req, res, next) =>{
+    db.none('UPDATE cars SET driver= $1, capacity=$2, model=$3 where plate_number=$4',
+        [req.body.driver, parseInt(req.body.capacity), req.body.model, req.params.number])
         .then(() => {
             res.status(200)
                 .json({
                     status: 'success',
-                    message: 'Updated a driver'
+                    message: 'Updated a car'
                 });
         })
         .catch((err) => {
@@ -61,14 +59,14 @@ router.put('/:username', (req, res, next) =>{
         });
 });
 
-router.delete('/:username', (req, res, next) => {
-    const username = req.params.username;
-    db.none('DELETE FROM users WHERE username = $1', username)
+router.delete('/:number', (req, res, next) => {
+    const plate_number = req.params.number;
+    db.none('DELETE FROM cars WHERE plate_number = $1', plate_number)
         .then(() => {
             res.status(200)
                 .json({
                     status: 'success',
-                    message: `Removed a user`
+                    message: `Removed a car`
                 });
         })
         .catch(function (err) {

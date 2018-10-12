@@ -23,10 +23,8 @@ function createBid(req, res, next) {
   req.body.bid_id = parseInt(req.body.bid_id);
   req.body.amount = parseInt(req.body.amount);
   req.body.start_time = Date.parse(req.body.start_time);
-  const time = '2018-10-11 04:05:06'
   const query = 'INSERT INTO bids(bid_id, passenger, car, start_time, source, destination, amount, status) ' +
-      'values(${bid_id}, ${passenger}, ${car}, ${time}, ${source}, ${destination}, ${amount}, \'pending\')';
-  console.log(query);
+      'values(${bid_id}, ${passenger}, ${car}, ${start_time}, ${source}, ${destination}, ${amount}, \'pending\')';
   db.none(query,
     req.body)
     .then(function () {

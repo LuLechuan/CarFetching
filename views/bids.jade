@@ -2,7 +2,21 @@ extends layout
 
 block content
   h2 All bids
+<<<<<<< Updated upstream
   ul
     each bid in bids
       li
         a(href="#") #{bid.passenger + " "  + bid.start_time + " " + bid.source + " " + bid.destination + " " + bid.amount + " " + bid.status}
+=======
+  table(class='table table-striped')
+    tr
+      th All bids We Have
+      th
+    each bid, i in bids
+      tr
+        td #{bid.passenger}
+        td From #{bid.source} to #{bid.destination} at time #{bid.start_time}
+        td #{bid.amount}
+        td
+          a(class="btn btn-tiny btn-default" href="/bids/edit/#{bid.bid_id}") Edit
+>>>>>>> Stashed changes

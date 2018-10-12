@@ -7,7 +7,6 @@ router.get('/bids', (req, res, next) => {
 
 router.get('/bids/add', (req, res, next) => {
   res.render('add_bid', {title: 'Create Bid'});
-  console.log(req)
 });
 
 router.get('/bids/edit/:id', (req, res, next) => {

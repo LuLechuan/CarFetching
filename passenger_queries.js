@@ -6,7 +6,7 @@ module.exports = {
   getBids: getBids,
   // getSingleBid: getSingleBid,
   createBid: createBid,
-  updateBid: updateBid
+  // updateBid: updateBid
 };
 
 function getBids(req, res, next) {
@@ -55,17 +55,17 @@ function createBid(req, res, next) {
     });
 }
 
-function updateBid(req, res, next) {
-  db.none('UPDATE bids SET amount = $1 where id=$2',
-    [parseInt(req.body.amount), parseInt(req.params.id)])
-    .then(function () {
-      res.status(200)
-        .json({
-          status: 'success',
-          message: 'Updated driver'
-        });
-    })
-    .catch(function (err) {
-      return next(err);
-    });
-}
+// function updateBid(req, res, next) {
+//   db.none('UPDATE bids SET amount = $1 where id=$2',
+//     [parseInt(req.body.amount), parseInt(req.params.id)])
+//     .then(function () {
+//       res.status(200)
+//         .json({
+//           status: 'success',
+//           message: 'Updated driver'
+//         });
+//     })
+//     .catch(function (err) {
+//       return next(err);
+//     });
+// }

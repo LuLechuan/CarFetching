@@ -97,6 +97,6 @@ router.delete('/:passenger/:car/:start_time/:source/destination', (req, res, nex
         });
 });
 
-router.put('/edit', passenger.updateBid);
+// router.put('/edit', passengers.updateBid);
 
 module.exports = router;

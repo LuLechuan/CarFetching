@@ -3,6 +3,6 @@ extends layout
 block content
   h2 All bids
   ul
-    each source, i in sources
+    each bid, i in bids
       li
-        a(href="#") #{source}
+        a(href="#") From #{bid.source} to #{bid.destination} at time #{bid.start_time}

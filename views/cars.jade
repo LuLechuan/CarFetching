@@ -1,0 +1,7 @@
+extends layout
+
+block content
+    ul
+        each car in cars
+            li
+                a(href="#") #{car.plate_number + " " +  car.driver + " " +  car.capacity + " " +  car.model}

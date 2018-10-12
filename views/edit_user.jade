@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    h1 #{title}
+    form(method='POST', action='/users/edit/#{user.username}')
+        .form-group
+            label Username:
+            input(name='username', type='text', value = '#{user.username}')
+        .form-group
+            label Name:
+            input(name='name', type='text', value = '#{user.name}')
+        .form-group
+            label Password:
+            input(name='password', type='text', value = '#{user.password}')
+        .form-group
+            label Age:
+            input(name='age', , type='text', value = '#{user.age}')
+        .form-group
+            label Sex:
+            input(name='sex', type='text', value = '#{user.sex}')
+        .form-group
+            label Role:
+            input(name='role', type='text', value = '#{user.role}')
+        input(type='submit', name='submit', value='Save Changes')
+        a(class="btn btn-tiny btn-default" href='/users') Back

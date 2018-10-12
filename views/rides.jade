@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h2 All rides
+  ul
+    each ride in rides
+      li
+        a(href="#") #{ride.car + " "  + ride.start_time + " " + ride.source + " " + ride.destination + " " + ride.number_passenger + " " + ride.status}

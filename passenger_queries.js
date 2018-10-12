@@ -10,14 +10,9 @@ module.exports = {
 function getBids(req, res, next) {
   db.any('SELECT * From bids')
     .then(function (data) {
-      const sources = data.map(d => d.source);
-      res.status(200)
-        .json({
-          status: 'success',
-          data: data,
-          message: 'Retrieved ALL Bids'
-        });
-      res.render('bids', {sources: sources});
+      const bids = data.map(d => d);
+
+      res.render('bids', {bids: bids});
     })
     .catch(function (err) {
       return next(err);
@@ -25,12 +20,11 @@ function getBids(req, res, next) {
 }
 
 function createBid(req, res, next) {
+  req.body.bid_id = parseInt(req.body.bid_id);
   req.body.amount = parseInt(req.body.amount);
-  // req.body.start_time = Date.parse(req.body.start_time) / 1000;
-  console.log(req.body);
-  const query = 'INSERT INTO bids(passenger, car, start_time, source, destination, amount, status) ' +
-      'values(${passenger}, ${car}, to_timestamp(${start_time}), ${source}, ${destination}, ${amount}, \'pending\')';
-  console.log(query);
+  req.body.start_time = Date.parse(req.body.start_time);
+  const query = 'INSERT INTO bids(bid_id, passenger, car, start_time, source, destination, amount, status) ' +
+      'values(${bid_id}, ${passenger}, ${car}, ${start_time}, ${source}, ${destination}, ${amount}, \'pending\')';
   db.none(query,
     req.body)
     .then(function () {

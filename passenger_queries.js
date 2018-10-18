@@ -3,11 +3,24 @@ var db = require('./db_connection');
 // add query functions
 
 module.exports = {
+  getRides: getRides,
   getBids: getBids,
-  // getSingleBid: getSingleBid,
+  getSingleBid: getSingleBid,
   createBid: createBid,
   // updateBid: updateBid
 };
+
+function getRides(req, res, next) {
+  // const currTime = new Date();
+  db.any('SELECT * From rides')
+    .then(function (data) {
+      const rides = data.map(r => r);
+      res.render('passenger_view_rides', {rides: rides});
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
 
 function getBids(req, res, next) {
   db.any('SELECT * From bids')
@@ -21,37 +34,43 @@ function getBids(req, res, next) {
     });
 }
 
-// function getSingleBid(req, res, next) {
-//   var bidID = parseInt(req.params.id);
-//   db.one('SELECT * FROM drivers WHERE id = $1', bidID)
-//     .then(function (data) {
-//       const bids = data.map(d => d);
-//       const bid = bids[0];
-//       res.render('bid', {bid: bid});
-//     })
-//     .catch(function (err) {
-//       return next(err);
-//     });
-// }
-
-function createBid(req, res, next) {
-  req.body.bid_id = parseInt(req.body.bid_id);
-  req.body.amount = parseInt(req.body.amount);
-  // req.body.start_time = Date.parse(req.body.start_time);
-  // const time = '2018-10-11 04:05:06'
-  const query = 'INSERT INTO bids(bid_id, passenger, car, start_time, source, destination, amount, status) ' +
-      'values(${bid_id}, ${passenger}, ${car}, ${start_time}, ${source}, ${destination}, ${amount}, \'pending\')';
-  db.none(query,
-    req.body)
-    .then(function () {
-      res.status(200)
-        .json({
-          status: 'success',
-          message: 'Created Bid'
-        });
+function getSingleBid(req, res, next) {
+  var bid_id = parseInt(req.params.bid_id);
+  db.one('SELECT * FROM bids WHERE bid_id = $1', bid_id)
+    .then(function (data) {
+      res.render('bid', {bid: data});
     })
     .catch(function (err) {
       return next(err);
+    });
+}
+
+function createBid(req, res, next) {
+  req.body.ride_id = parseInt(req.body.ride_id);
+  const passenger = req.body.passenger;
+  const amount = req.body.amount;
+
+  db.task(t => {
+    return t.batch([
+          t.one('SELECT * FROM rides WHERE ride_id=$1', req.body.ride_id),
+          t.one('SELECT COUNT(*) FROM bids')])
+      .then(data => {
+        var ride = data[0];
+        var bid_id = parseInt(data[1].count) + 1;
+        if (ride) {
+          const query = 'INSERT INTO bids(bid_id, passenger, car, start_time, source, destination, amount, status) ' +
+              'values($1, $2, $3, $4, $5, $6, $7, \'pending\')';
+          return t.none(query,
+            [bid_id, passenger, ride.car, ride.start_time, ride.source, ride.destination, amount]);
+        }
+        return [];
+      });
+  })
+    .then(events => {
+      res.redirect('/bids');
+    })
+    .catch(error => {
+        return next(error);
     });
 }
 

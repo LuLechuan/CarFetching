@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h2 Available Rides
+
+  table(class='table table-striped')
+    tr
+      th Rides available
+      th
+    each ride, i in rides
+      tr
+        td #{ride.ride_id}
+        td From #{ride.source} to #{ride.destination} at time #{ride.start_time}

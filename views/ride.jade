@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h2 Rides Information
+
+  table(class='table table-striped')
+    tr
+      th Rides ID #{ride.ride_id}
+      th
+      tr
+        td From #{ride.source}
+      tr
+        td To #{ride.destination}
+      tr
+        td At time #{ride.start_time}

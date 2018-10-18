@@ -36,7 +36,7 @@ router.get('/:car/:start_time/:source/destination', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    db.none('INSERT INTO ride VALUES(${car}, ${start_time}, ${source}, ${destination}, ${number_passenger}, ${status})', req.body)
+    db.none('INSERT INTO rides VALUES(${ride_id}, ${car}, ${start_time}, ${source}, ${destination}, ${number_passenger}, ${status})', req.body)
         .then(() => {
             res.status(200)
                 .json({
@@ -56,7 +56,7 @@ router.put('/:car/:start_time/:source/destination', (req, res, next) =>{
     const destination = req.params.destination;
     const status = req.body.status;
     const number_passenger = req.body.number_passenger;
-    db.none('UPDATE bids SET number_passenger=$1, status=$2 where passenger=$3 AND car=$4 AND start_time=$5 AND source=$6 AND destination=$7',
+    db.none('UPDATE rides SET number_passenger=$1, status=$2, car = $3, start_time = $4, source = $5, destination = $6 where car=$3 AND start_time=$4 AND source=$5 AND destination=$6',
         [number_passenger, status, car, start_time, source, destination])
         .then(() => {
             res.status(200)

@@ -4,6 +4,9 @@ block content
   h1 #{title}
   form(method='post', action='/bids/add')
     .form-group
+      label Bid_ID:
+      input(name='bid_id', type='text')
+    .form-group
       label Passenger:
       input(name='passenger', type='text')
     .form-group

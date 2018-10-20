@@ -4,29 +4,13 @@ block content
   h1 #{title}
   form(method='post', action='/bids/add')
     .form-group
-      label Bid_ID:
-      input(name='bid_id', type='text')
+      input(name='ride_id', type='hidden', value='#{ride_id}')
     .form-group
       label Passenger:
       input(name='passenger', type='text')
     .form-group
-      label Car:
-      input(name='car', type='text')
-    .form-group
-      label Start_Time:
-      input(name='start_time')
-    .form-group
-      label Source:
-      input(name='source', type='text')
-    .form-group
-      label Destination:
-      input(name='destination', type='text')
-    .form-group
       label Amount:
       input(name='amount', type='text')
-    .form-group
-      label Status:
-      input(name='status', type='text')
     input(type='submit', name='submit', value='Save')
 
-    a(href='/passengers/bids') Back
+    a(href='/rides/#{ride_id}') Back

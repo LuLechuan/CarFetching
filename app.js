@@ -35,6 +35,18 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(session({
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: true
+}));
+
+app.use(require('connect-flash')());
+app.use((req, res, next) => {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+
 // Express validator
 app.use(expressValidator({
   errorFormatter: (param, msg, value) => {

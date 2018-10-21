@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1 #{title}
+  form(method='post', action='/signUp')
+    .form-group
+      label Username:
+      input(name='username', type='text')
+    .form-group
+      label Password:
+      input(name='password', type='text')
+    .form-group
+      label Name:
+      input(name='name', type='text')
+    .form-group
+      label Age:
+      input(name='age', type='text')
+    .form-group
+      label Sex:
+      input(name='sex', type='text')
+    .form-group
+      label Role:
+      input(name='role', type='text')
+    input(type='submit', name='submit', value='Submit')
+
+    p Already has an account?
+    a(href='/login') login here

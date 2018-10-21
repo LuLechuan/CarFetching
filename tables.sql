@@ -73,7 +73,7 @@ INSERT INTO cars values ('SII2452F', 'Bethanye39', '4', 'Volkswagen');
 
 DROP TABLE IF EXISTS rides CASCADE;
 CREATE TABLE rides (
-  ride_id VARCHAR(32) NOT NULL UNIQUE,
+  ride_id INT NOT NULL UNIQUE,
   car CHAR(8),
   start_time TIMESTAMP,
   source VARCHAR(128),
@@ -85,23 +85,23 @@ CREATE TABLE rides (
   FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE
 );
 
-INSERT INTO rides values ('1','SBW1234W', '2018-10-11 04:05:06', 'Buona Vista', 'Bedok', 1, 'pending');
-INSERT INTO rides values ('2','SBQ1232Q', '2018-10-11 08:00:00', 'Jurong East', 'Bedok', 2, 'pending');
-INSERT INTO rides values ('3','SSQ2342E', '2018-10-10 10:00:00', 'Jurong East', 'Changi', 1, 'pending');
-INSERT INTO rides values ('4','SAX2322F', '2018-10-11 12:00:00', 'Chinatown', 'Woodland', 3, 'pending');
-INSERT INTO rides values ('5','SCZ2452F', '2018-10-10 23:00:00', 'Boon Lay', 'Tampines', 2, 'pending');
+INSERT INTO rides values (1,'SBW1234W', '2018-10-11 04:05:06', 'Buona Vista', 'Bedok', 1, 'pending');
+INSERT INTO rides values (2,'SBQ1232Q', '2018-10-11 08:00:00', 'Jurong East', 'Bedok', 2, 'pending');
+INSERT INTO rides values (3,'SSQ2342E', '2018-10-10 10:00:00', 'Jurong East', 'Changi', 1, 'pending');
+INSERT INTO rides values (4,'SAX2322F', '2018-10-11 12:00:00', 'Chinatown', 'Woodland', 3, 'pending');
+INSERT INTO rides values (5,'SCZ2452F', '2018-10-10 23:00:00', 'Boon Lay', 'Tampines', 2, 'pending');
 
-INSERT INTO rides values ('6','SRW1254W', '2018-10-11 04:05:06', 'Buona Vista', 'Newton', 1, 'pending');
-INSERT INTO rides values ('7','SBQ1214O', '2018-10-11 08:30:00', 'Jurong West', 'Newton', 2, 'pending');
-INSERT INTO rides values ('8','SPP2342E', '2018-10-10 10:30:00', 'Jurong West', 'Changi', 1, 'pending');
-INSERT INTO rides values ('9','SKK2322F', '2018-10-11 12:30:00', 'Hougang', 'Woodland', 3, 'pending');
-INSERT INTO rides values ('10','SII2452F', '2018-10-10 23:30:00', 'Bartley', 'Tampines', 2, 'pending');
+INSERT INTO rides values (6,'SRW1254W', '2018-10-11 04:05:06', 'Buona Vista', 'Newton', 1, 'pending');
+INSERT INTO rides values (7,'SBQ1214O', '2018-10-11 08:30:00', 'Jurong West', 'Newton', 2, 'pending');
+INSERT INTO rides values (8,'SPP2342E', '2018-10-10 10:30:00', 'Jurong West', 'Changi', 1, 'pending');
+INSERT INTO rides values (9,'SKK2322F', '2018-10-11 12:30:00', 'Hougang', 'Woodland', 3, 'pending');
+INSERT INTO rides values (10,'SII2452F', '2018-10-10 23:30:00', 'Bartley', 'Tampines', 2, 'pending');
 
 -- INSERT INTO rides values ("A012324M", "2017-07-23", "Buona Vista", "Bedok", 1, "pending");
 
 DROP TABLE IF EXISTS bids;
 CREATE TABLE bids (
-  bid_id VARCHAR(64) NOT NULL UNIQUE,
+  bid_id INT NOT NULL UNIQUE,
   passenger VARCHAR(128),
   car CHAR(8),
   start_time TIMESTAMP,
@@ -114,15 +114,14 @@ CREATE TABLE bids (
   FOREIGN KEY (car, start_time, source, destination) REFERENCES rides(car, start_time, source, destination) ON DELETE CASCADE
 );
 
-INSERT INTO bids values ('00','Ava923','SBW1234W','2018-10-11 04:05:06','Buona Vista','Bedok',10.5,'pending');
-INSERT INTO bids values ('01','Abigail223','SBQ1232Q','2018-10-11 08:00:00','Jurong East','Bedok',20.5,'pending');
-INSERT INTO bids values ('02','Barbara231','SSQ2342E','2018-10-10 10:00:00','Jurong East','Changi',22.5,'pending');
-INSERT INTO bids values ('03','Damian678','SAX2322F','2018-10-11 12:00:00','Chinatown','Woodland',12.5,'pending');
-INSERT INTO bids values ('04','Alexander894','SCZ2452F','2018-10-10 23:00:00','Boon Lay','Tampines',31.5,'pending');
+INSERT INTO bids values (1,'Ava923','SBW1234W','2018-10-11 04:05:06','Buona Vista','Bedok',10.5,'pending');
+INSERT INTO bids values (2,'Abigail223','SBQ1232Q','2018-10-11 08:00:00','Jurong East','Bedok',20.5,'pending');
+INSERT INTO bids values (3,'Barbara231','SSQ2342E','2018-10-10 10:00:00','Jurong East','Changi',22.5,'pending');
+INSERT INTO bids values (4,'Damian678','SAX2322F','2018-10-11 12:00:00','Chinatown','Woodland',12.5,'pending');
+INSERT INTO bids values (5,'Alexander894','SCZ2452F','2018-10-10 23:00:00','Boon Lay','Tampines',31.5,'pending');
 
-INSERT INTO bids values ('05','Linda821','SRW1254W','2018-10-11 04:05:06','Buona Vista','Newton',10.5,'pending');
-INSERT INTO bids values ('06','Margaret290','SBQ1214O','2018-10-11 08:30:00','Jurong West','Newton',20.5,'pending');
-INSERT INTO bids values ('07','Reece389','SPP2342E','2018-10-10 10:30:00','Jurong West','Changi',22.5,'pending');
-INSERT INTO bids values ('08','Kyle283','SKK2322F','2018-10-11 12:30:00','Hougang','Woodland',12.5,'pending');
-INSERT INTO bids values ('09','Michael231','SII2452F','2018-10-10 23:30:00','Bartley','Tampines',31.5,'pending');
--- INSERT INTO bids values ("Samuel", "A012324M", "2017-07-23", "Buona Vista", "Bedok", 20, "pending");
+INSERT INTO bids values (6,'Linda821','SRW1254W','2018-10-11 04:05:06','Buona Vista','Newton',10.5,'pending');
+INSERT INTO bids values (7,'Margaret290','SBQ1214O','2018-10-11 08:30:00','Jurong West','Newton',20.5,'pending');
+INSERT INTO bids values (8,'Reece389','SPP2342E','2018-10-10 10:30:00','Jurong West','Changi',22.5,'pending');
+INSERT INTO bids values (9,'Kyle283','SKK2322F','2018-10-11 12:30:00','Hougang','Woodland',12.5,'pending');
+INSERT INTO bids values (10,'Michael231','SII2452F','2018-10-10 23:30:00','Bartley','Tampines',31.5,'pending');

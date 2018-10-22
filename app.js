@@ -69,6 +69,8 @@ app.use(expressValidator({
   }
 }));
 
+currentUser = null;
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/cars', cars);

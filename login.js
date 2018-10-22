@@ -1,5 +1,4 @@
 var db = require('./db_connection');
-var user = require('./currentUser');
 
 // add query functions
 
@@ -56,8 +55,7 @@ function loginAction(req, res, next) {
    .then(function (data) {
      if (data.exists) {
        req.flash('success_msg', 'Login Successful!');
-       user = username;
-       console.log(user)
+       currentUser = username;
        res.redirect('/');
      } else {
        let errors = [{ param: 'passwordMismatch', msg: 'Invalid Username or Password', value: '' }];
@@ -70,14 +68,13 @@ function loginAction(req, res, next) {
 }
 
 function logout(req, res, next) {
-  user = null;
+  currentUser = null;
   req.flash('success_msg', 'Logout Success');
   res.redirect('/');
 }
 
 function ensureAuthentication(req, res, next) {
-  console.log(user)
-  if (user == null) {
+  if (currentUser == null) {
     res.redirect('/login');
     req.flash('error_msg', 'Please login first');
   } else {

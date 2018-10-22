@@ -4,8 +4,7 @@ block content
   h1 #{title}
   form(method='post', action='/bids/edit')
     .form-group
-      label Bid_ID:
-      input(name='bid_id', type='text')
+      input(name='bid_id', type='hidden', value='#{bid_id}')
     .form-group
       label Amount:
       input(name='amount', type='text')

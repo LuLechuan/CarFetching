@@ -3,7 +3,7 @@ const router = express.Router();
 
 const login = require('../login');
 
-router.get('/', login.ensureAuthentication, (req, res, next) => {
+router.get('/', (req, res, next) => {
   res.render('index', {
     title: 'Vber'
   });

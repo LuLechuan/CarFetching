@@ -8,7 +8,8 @@ module.exports = {
   getSingleBid: getSingleBid,
   createBid: createBid,
   getEditPage: getEditPage,
-  updateBid: updateBid
+  updateBid: updateBid,
+  deleteBid: deleteBid
 };
 
 function getRides(req, res, next) {
@@ -84,6 +85,17 @@ function updateBid(req, res, next) {
   db.none('UPDATE bids SET amount = $1 where bid_id=$2',
     [parseInt(req.body.amount), parseInt(req.body.bid_id)])
     .then(function () {
+      res.redirect('/bids');
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+function deleteBid(req, res, next) {
+  const bid_id = req.params.bid_id;
+  db.result('DELETE FROM bids WHERE bid_id = $1', bid_id)
+    .then(function (result) {
       res.redirect('/bids');
     })
     .catch(function (err) {

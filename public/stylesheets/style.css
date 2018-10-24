@@ -1,8 +1,8 @@
 body {
   background-image: url('b2.jpg');
   background-repeat: no-repeat;
-  background-size: 1300px 680px;
-  opacity: 0.85;
+  background-size: cover;
+  opacity: 0.83;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }

@@ -2,6 +2,10 @@ extends layout
 
 block content
   h1 #{title}
+
+  if errors
+    for each in errors
+        p.error #{each.msg}
   form(method='post', action='/signUp')
     .form-group
       label Username:
@@ -9,6 +13,9 @@ block content
     .form-group
       label Password:
       input(name='password', type='text')
+    .form-group
+      label Confirm Password:
+      input(name='confirmPassword', type='text')
     .form-group
       label Name:
       input(name='name', type='text')

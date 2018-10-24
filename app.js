@@ -4,6 +4,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const flash = require('connect-flash');
 const session = require('express-session');
 const expressValidator = require('express-validator');
 
@@ -28,18 +29,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Express messages
-app.use(require('connect-flash')());
-app.use((req, res, next) => {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
-});
-
 app.use(session({
   secret: 'secret',
   saveUninitialized: true,
   resave: true
 }));
+
+// Express messages
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
+  next();
+});
 
 app.use(require('connect-flash')());
 app.use((req, res, next) => {
@@ -64,6 +68,8 @@ app.use(expressValidator({
     };
   }
 }));
+
+currentUser = null;
 
 app.use('/', index);
 app.use('/admin', admin);

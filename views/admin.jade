@@ -1,9 +1,9 @@
 extends layout
 
 block content
-  h1 All users
+  h1 Admin Page
   ul
-    form.form-inline(method='POST', action='/users')
+    form.form-inline(method='POST', action='/admin/')
       .form-group
         label Username:
         input(name='username', type='text', size='10')
@@ -41,5 +41,5 @@ block content
           td #{user.sex}
           td #{user.role}
           td
-            a.btn.btn-tiny.btn-primary(href="/users/edit/#{user.username}") Edit
+            a.btn.btn-tiny.btn-primary(href="/admin/edit/#{user.username}") Edit
             a.btn.btn-tiny.btn-danger.delete(href="#", data-id = '#{user.username}') Delete

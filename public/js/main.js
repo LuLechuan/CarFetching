@@ -4,10 +4,10 @@ $(document).ready(function(){
         const username = $target.attr('data-id');
         $.ajax({
             type:'DELETE',
-            url:'/users/' + username,
+            url:'/admin/' + username,
             success: function(response) {
                 alert('Deleting ' + username);
-                window.location.href='/users/';
+                window.location.href='/admin/';
             },
             error: function(err) {
                 console.log(err);

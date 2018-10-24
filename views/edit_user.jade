@@ -2,7 +2,7 @@ extends layout
 
 block content
     h1 #{title}
-    form(method='POST', action='/users/edit/#{user.username}')
+    form(method='POST', action='/admin/edit/#{user.username}')
         .form-group
             label Username:
             input(name='username', type='text', value = '#{user.username}')
@@ -22,4 +22,4 @@ block content
             label Role:
             input(name='role', type='text', value = '#{user.role}')
         input(type='submit', name='submit', value='Save Changes')
-        a(class="btn btn-tiny btn-default" href='/users') Back
+        a(class="btn btn-tiny btn-default" href='/admin') Back

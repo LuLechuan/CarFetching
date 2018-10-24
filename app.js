@@ -66,7 +66,7 @@ app.use(expressValidator({
 }));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/admin', users);
 app.use('/cars', cars);
 app.use('/rides', rides);
 app.use('/bids', bids);

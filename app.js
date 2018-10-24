@@ -11,7 +11,7 @@ const expressValidator = require('express-validator');
 const app = express();
 
 const index = require('./routes/index');
-const users = require('./routes/users');
+const admin = require('./routes/admin');
 const cars = require('./routes/cars');
 const rides = require('./routes/rides');
 const bids = require('./routes/bids');
@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 // Express validator
 app.use(expressValidator({
   errorFormatter: (param, msg, value) => {
-    const namespace = param.split('.'),
+    var namespace = param.split('.'),
       root = namespace.shift(),
       formParam = root;
 
@@ -72,7 +72,7 @@ app.use(expressValidator({
 currentUser = null;
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/admin', admin);
 app.use('/cars', cars);
 app.use('/rides', rides);
 app.use('/bids', bids);

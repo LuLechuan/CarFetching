@@ -23,6 +23,18 @@ router.get('/login', (req, res, next) => {
   });
 });
 
+router.get('/passengerHome',(req, res, next) => {
+  res.render('passengerHome',{
+    title: 'PassengerHome'
+  });
+});
+
+router.get('/driverHome',(req, res, next) => {
+  res.render('driverHome',{
+    title: 'driverHome'
+  });
+});
+
 router.post('/signUp', login.signUp);
 router.post('/loginAction', login.loginAction);
 

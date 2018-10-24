@@ -6,13 +6,24 @@ router.get('/', (req, res, next) => {
     db.any('SELECT * FROM rides')
         .then((data) => {
             const rides = data;
-            console.log(rides);
             res.render('rides', {rides : rides});
         })
         .catch((err) => {
             return next(err);
         });
 });
+
+router.get('/:ride_id', (req, res, next) => {
+  var ride_id = parseInt(req.params.ride_id);
+  db.one('SELECT * FROM rides WHERE ride_id = $1', ride_id)
+    .then(function (data) {
+      const ride = data;
+      res.render('ride', {ride : ride});
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+})
 
 // couldn't get this to work yet
 router.get('/:car/:start_time/:source/destination', (req, res, next) => {

@@ -2,8 +2,30 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db_connection');
 
+const driver_queries = require('../driver_queries');
+
 router.get('/', (req, res, next) => {
     db.any('SELECT * FROM rides')
+        .then((data) => {
+            const rides = data;
+            res.render('rides', {rides : rides});
+        })
+        .catch((err) => {
+            return next(err);
+        });
+});
+
+// DONE
+router.get('/add_ride', (req, res, next) => {
+    res.render('add_ride', {
+      title: 'Create ride'
+    });
+})
+
+// NOT DONE
+router.get('/own_bids', (req, res, next) => {
+    var user = currentUser;
+    db.any('SELECT * FROM rides ')
         .then((data) => {
             const rides = data;
             res.render('rides', {rides : rides});
@@ -45,6 +67,9 @@ router.get('/:car/:start_time/:source/destination', (req, res, next) => {
             return next(err);
         });
 });
+
+//DONE
+router.post('/createRide', driver_queries.createRide);
 
 router.post('/', (req, res, next) => {
     db.none('INSERT INTO rides VALUES(${ride_id}, ${car}, ${start_time}, ${source}, ${destination}, ${number_passenger}, ${status})', req.body)

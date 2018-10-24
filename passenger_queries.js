@@ -55,10 +55,10 @@ function createBid(req, res, next) {
   db.task(t => {
     return t.batch([
           t.one('SELECT * FROM rides WHERE ride_id=$1', req.body.ride_id),
-          t.one('SELECT COUNT(*) FROM bids')])
+          t.one('SELECT MAX(bid_id) FROM bids')])
       .then(data => {
         var ride = data[0];
-        var bid_id = parseInt(data[1].count) + 1;
+        var bid_id = parseInt(data[1].max) + 1;
         if (ride) {
           const query = 'INSERT INTO bids(bid_id, passenger, car, start_time, source, destination, amount, status) ' +
               'values($1, $2, $3, $4, $5, $6, $7, \'pending\')';

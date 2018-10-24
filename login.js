@@ -54,9 +54,20 @@ function loginAction(req, res, next) {
    [username, password])
    .then(function (data) {
      if (data.exists) {
-       req.flash('success_msg', 'Login Successful!');
-       currentUser = username;
-       res.redirect('/');
+       db.one('SELECT * FROM users WHERE username=$1', username)
+       .then(function(user) {
+         req.flash('success_msg', 'Login Successful!');
+         currentUser = username;
+         userrole = user.role;
+         if (userrole == 'driver') {
+           res.redirect('/driverHome');
+         } else {
+           res.redirect('/passengerHome');
+         }
+       })
+       .catch(function (err) {
+         return next(err);
+       });
      } else {
        let errors = [{ param: 'passwordMismatch', msg: 'Invalid Username or Password', value: '' }];
        res.render('login', {title: 'Login', errors: errors});

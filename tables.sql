@@ -73,6 +73,7 @@ INSERT INTO cars values ('SII2452F', 'Bethanye39', '4', 'Volkswagen');
 
 DROP TABLE IF EXISTS rides CASCADE;
 CREATE TABLE rides (
+  rideOwner VARCHAR(128) NOT NULL,
   ride_id INT NOT NULL UNIQUE,
   car CHAR(8),
   start_time TIMESTAMP,
@@ -83,19 +84,20 @@ CREATE TABLE rides (
   PRIMARY KEY (car, start_time, source, destination),
   CHECK (source <> destination),
   FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE
+  FOREIGN KEY (rideOwner) REFERENCES users(username) ON DELETE CASCADE
 );
 
-INSERT INTO rides values (1,'SBW1234W', '2018-10-11 04:05:06', 'Buona Vista', 'Bedok', 1, 'pending');
-INSERT INTO rides values (2,'SBQ1232Q', '2018-10-11 08:00:00', 'Jurong East', 'Bedok', 2, 'pending');
-INSERT INTO rides values (3,'SSQ2342E', '2018-10-10 10:00:00', 'Jurong East', 'Changi', 1, 'pending');
-INSERT INTO rides values (4,'SAX2322F', '2018-10-11 12:00:00', 'Chinatown', 'Woodland', 3, 'pending');
-INSERT INTO rides values (5,'SCZ2452F', '2018-10-10 23:00:00', 'Boon Lay', 'Tampines', 2, 'pending');
+INSERT INTO rides values ('Oliver123', 1,'SBW1234W', '2018-10-11 04:05:06', 'Buona Vista', 'Bedok', 1, 'pending');
+INSERT INTO rides values ('Oliver123', 2,'SBQ1232Q', '2018-10-11 08:00:00', 'Jurong East', 'Bedok', 2, 'pending');
+INSERT INTO rides values ('Jack123', 3,'SSQ2342E', '2018-10-10 10:00:00', 'Jurong East', 'Changi', 1, 'pending');
+INSERT INTO rides values ('Jack123', 4,'SAX2322F', '2018-10-11 12:00:00', 'Chinatown', 'Woodland', 3, 'pending');
+INSERT INTO rides values ('Harry234', 5,'SCZ2452F', '2018-10-10 23:00:00', 'Boon Lay', 'Tampines', 2, 'pending');
 
-INSERT INTO rides values (6,'SRW1254W', '2018-10-11 04:05:06', 'Buona Vista', 'Newton', 1, 'pending');
-INSERT INTO rides values (7,'SBQ1214O', '2018-10-11 08:30:00', 'Jurong West', 'Newton', 2, 'pending');
-INSERT INTO rides values (8,'SPP2342E', '2018-10-10 10:30:00', 'Jurong West', 'Changi', 1, 'pending');
-INSERT INTO rides values (9,'SKK2322F', '2018-10-11 12:30:00', 'Hougang', 'Woodland', 3, 'pending');
-INSERT INTO rides values (10,'SII2452F', '2018-10-10 23:30:00', 'Bartley', 'Tampines', 2, 'pending');
+INSERT INTO rides values ('Harry234', 6,'SRW1254W', '2018-10-11 04:05:06', 'Buona Vista', 'Newton', 1, 'pending');
+INSERT INTO rides values ('Jacob239', 7,'SBQ1214O', '2018-10-11 08:30:00', 'Jurong West', 'Newton', 2, 'pending');
+INSERT INTO rides values ('Jacob239', 8,'SPP2342E', '2018-10-10 10:30:00', 'Jurong West', 'Changi', 1, 'pending');
+INSERT INTO rides values ('Amelia238', 9,'SKK2322F', '2018-10-11 12:30:00', 'Hougang', 'Woodland', 3, 'pending');
+INSERT INTO rides values ('Amelia238', 10,'SII2452F', '2018-10-10 23:30:00', 'Bartley', 'Tampines', 2, 'pending');
 
 -- INSERT INTO rides values ("A012324M", "2017-07-23", "Buona Vista", "Bedok", 1, "pending");
 

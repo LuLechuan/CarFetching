@@ -5,7 +5,6 @@ const login = require('../login');
 
 const driver_queries = require('../driver_queries');
 
-router.get('/', (req, res, next) => {
 router.get('/', login.ensureAuthentication, (req, res, next) => {
     db.any('SELECT * FROM rides')
         .then((data) => {
@@ -24,20 +23,19 @@ router.get('/add_ride', (req, res, next) => {
     });
 })
 
-// NOT DONE
-router.get('/own_bids', (req, res, next) => {
-    var user = currentUser;
-    db.any('SELECT * FROM rides ')
+// CANNOT GET THIS TO LOAD
+router.get('/own_rides', (req, res, next) => {
+    var currentuser = login.username;
+    db.any('SELECT * FROM rides WHERE rideOwner = $1', currentuser)
         .then((data) => {
             const rides = data;
-            res.render('rides', {rides : rides});
+            res.render('own_rides', {rides : rides});
         })
         .catch((err) => {
             return next(err);
         });
 });
 
-router.get('/:ride_id', (req, res, next) => {
 router.get('/:ride_id', login.ensureAuthentication, (req, res, next) => {
   var ride_id = parseInt(req.params.ride_id);
   db.one('SELECT * FROM rides WHERE ride_id = $1', ride_id)
@@ -48,7 +46,7 @@ router.get('/:ride_id', login.ensureAuthentication, (req, res, next) => {
     .catch(function (err) {
       return next(err);
     });
-})
+});
 
 // couldn't get this to work yet
 router.get('/:car/:start_time/:source/destination', (req, res, next) => {

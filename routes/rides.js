@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db_connection');
+const login = require('../login');
 
 const driver_queries = require('../driver_queries');
 
 router.get('/', (req, res, next) => {
+router.get('/', login.ensureAuthentication, (req, res, next) => {
     db.any('SELECT * FROM rides')
         .then((data) => {
             const rides = data;
@@ -36,6 +38,7 @@ router.get('/own_bids', (req, res, next) => {
 });
 
 router.get('/:ride_id', (req, res, next) => {
+router.get('/:ride_id', login.ensureAuthentication, (req, res, next) => {
   var ride_id = parseInt(req.params.ride_id);
   db.one('SELECT * FROM rides WHERE ride_id = $1', ride_id)
     .then(function (data) {

@@ -82,7 +82,7 @@ CREATE TABLE rides (
   status VARCHAR(8) NOT NULL CHECK(status = 'pending' OR status = 'success' OR status = 'failed'),
   PRIMARY KEY (car, start_time, source, destination),
   CHECK (source <> destination),
-  FOREIGN KEY (car) REFERENCES cars(plate_number)
+  FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE
 );
 
 INSERT INTO rides values (1,'SBW1234W', '2018-10-11 04:05:06', 'Buona Vista', 'Bedok', 1, 'pending');

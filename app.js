@@ -4,13 +4,14 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const flash = require('connect-flash');
 const session = require('express-session');
 const expressValidator = require('express-validator');
 
 const app = express();
 
 const index = require('./routes/index');
-const users = require('./routes/users');
+const admin = require('./routes/admin');
 const cars = require('./routes/cars');
 const rides = require('./routes/rides');
 const bids = require('./routes/bids');
@@ -28,18 +29,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Express messages
-app.use(require('connect-flash')());
-app.use((req, res, next) => {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
-});
-
 app.use(session({
   secret: 'secret',
   saveUninitialized: true,
   resave: true
 }));
+
+// Express messages
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
+  next();
+});
 
 app.use(require('connect-flash')());
 app.use((req, res, next) => {
@@ -50,7 +54,7 @@ app.use((req, res, next) => {
 // Express validator
 app.use(expressValidator({
   errorFormatter: (param, msg, value) => {
-    const namespace = param.split('.'),
+    var namespace = param.split('.'),
       root = namespace.shift(),
       formParam = root;
 
@@ -65,8 +69,10 @@ app.use(expressValidator({
   }
 }));
 
+currentUser = null;
+
 app.use('/', index);
-app.use('/users', users);
+app.use('/admin', admin);
 app.use('/cars', cars);
 app.use('/rides', rides);
 app.use('/bids', bids);

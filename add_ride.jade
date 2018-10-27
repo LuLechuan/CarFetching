@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1 #{title}
+  form(method='post', action='/rides/add')
+    .form-group
+      label Ride_ID:
+      input(name='ride_id', type='text')
+    .form-group
+      label Car:
+      input(name='car', type='text')
+    .form-group
+      label Start Time:
+      input(name='start_time', type='text')
+    .form-group
+      label Source:
+      input(name='source', type='text')
+    .form-group
+      label Destination:
+      input(name='destination', type='text')
+    .form-group
+      label Number of Passengers:
+      input(name='number_passenger', type='text')
+    .form-group
+      label Status:
+      input(name='status', type='text')
+    input(type='submit', name='submit', value='Save')
+
+    a(href='/passengers/rides') Back

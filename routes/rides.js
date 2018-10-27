@@ -24,6 +24,7 @@ router.get('/add_ride', (req, res, next) => {
 })
 
 // CANNOT GET THIS TO LOAD
+// need add rideOwnder in rides.sql
 router.get('/own_rides', (req, res, next) => {
     var currentuser = login.username;
     db.any('SELECT * FROM rides WHERE rideOwner = $1', currentuser)

@@ -7,6 +7,9 @@ const passenger = require('../passenger_queries');
 
 router.get('/', login.ensureAuthentication, passenger.getBids);
 
+// NEWLY ADDED BY ZC
+router.get('/own_bids', login.ensureAuthentication, passenger.ownBids);
+
 router.get('/:bid_id', login.ensureAuthentication, passenger.getSingleBid);
 
 router.post('/add', login.ensureAuthentication, passenger.createBid);

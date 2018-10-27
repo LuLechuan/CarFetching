@@ -1,4 +1,5 @@
 var db = require('./db_connection');
+var login = require('./login');
 
 // add query functions
 
@@ -9,7 +10,8 @@ module.exports = {
   createBid: createBid,
   getEditPage: getEditPage,
   updateBid: updateBid,
-  deleteBid: deleteBid
+  deleteBid: deleteBid,
+  ownBids: ownBids
 };
 
 function getRides(req, res, next) {
@@ -30,6 +32,21 @@ function getBids(req, res, next) {
       const bids = data.map(d => d);
 
       res.render('bids', {bids: bids});
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+// NEWLY CREATED - to access bids own driver's own rides
+// need to add driver in bids.sql
+function ownBids(req, res, next) {
+  var currentuser = login.currentuser;
+  db.any('SELECT * From bids WHERE driver = $1', currentUser)
+    .then(function (data) {
+      const bids = data.map(d => d);
+
+      res.render('own_bids', {bids: bids});
     })
     .catch(function (err) {
       return next(err);

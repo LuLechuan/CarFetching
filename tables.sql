@@ -83,7 +83,7 @@ CREATE TABLE rides (
   status VARCHAR(8) NOT NULL CHECK(status = 'pending' OR status = 'success' OR status = 'failed'),
   PRIMARY KEY (car, start_time, source, destination),
   CHECK (source <> destination),
-  FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE
+  FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE,
   FOREIGN KEY (rideOwner) REFERENCES users(username) ON DELETE CASCADE
 );
 

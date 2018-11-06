@@ -1,4 +1,4 @@
-extends layout
+extends ./layout.jade
 
 block content
   head
@@ -6,11 +6,4 @@ block content
     link(rel='stylesheet', href='/stylesheets/style2.css')
 
   body
-    .topnav
-      a.active(href='/') Home
-      a(href='/rides/add_ride') Create ride
-      a(href='/rides') View all current rides
-      a(href='/rides/own_rides') View own current rides
-      a(href='/bids') View all current bids
-      a(href='/bids/own_bids') View current bids for own rides
-      a(href='/about') About
+    

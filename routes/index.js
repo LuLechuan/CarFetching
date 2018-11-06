@@ -11,6 +11,12 @@ router.get('/', (req, res, next) => {
 
 router.get('/logout', login.logout);
 
+router.get('/about', (req, res, next) => {
+  res.render('about', {
+    title: 'About'
+  });
+});
+
 router.get('/register', (req, res, next) => {
   res.render('register', {
     title: 'Sign Up'

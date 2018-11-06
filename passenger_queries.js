@@ -41,7 +41,6 @@ function getBids(req, res, next) {
 // NEWLY CREATED - to access bids own driver's own rides
 // need to add driver in bids.sql
 function ownBids(req, res, next) {
-  var currentuser = login.currentuser;
   db.any('SELECT * From bids WHERE driver = $1', currentUser)
     .then(function (data) {
       const bids = data.map(d => d);

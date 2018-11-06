@@ -4,7 +4,8 @@ var login = require('./login');
 // add query functions
 
 module.exports = {
-  createRide: createRide
+  createRide: createRide,
+  ownBids: ownBids
   // updateBid: updateBid
 };
 

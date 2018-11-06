@@ -11,7 +11,6 @@ module.exports = {
     getEditPage: getEditPage,
     updateBid: updateBid,
     deleteBid: deleteBid,
-    ownBids: ownBids
 };
 
 function getRides(req, res, next) {

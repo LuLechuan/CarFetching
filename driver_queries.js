@@ -23,12 +23,8 @@ function createRide(req, res, next) {
         db.none('INSERT INTO rides (ride_id, car, start_time, source, destination, number_passenger, status) values ($1, $2, $3, $4, $5, $6, $7)',
           [ride_id, car, start_time, source, destination, number_passenger, status])
           .then(function () {
-            res.status(200)
-              .json({
-                status: 'success',
-                message: 'Created a ride'
+            res.redirect('/rides/own_rides')
             });
-          })
     })
     .catch(function (err) {
       return next(err);

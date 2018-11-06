@@ -14,16 +14,16 @@ html
           a(href='/rides/add_ride') Create ride
           a(href='/rides') View all current rides
           a(href='/rides/own_rides') View own current rides
-          a(href='/bids') View all current bids
           a(href='/bids/own_bids') View current bids for own rides
+          a(href='/drivers/history') History
           a(href='/logout') Log out
-      else 
+      else
         .topnav
           a.active(href='/passengerHome') Home
           a(href='/rides') View Rides Available
           a(href='/passengers/bids') View bids record
           a(href='/logout') Log out
-    else 
+    else
       .topnav
         a.active(href='/') Home
         a(href='/login') Login
@@ -31,8 +31,8 @@ html
         a(href='/about') About
 
 
-    
-      
+
+
 
   block content
     if success_msg

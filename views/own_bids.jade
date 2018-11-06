@@ -13,8 +13,6 @@ block content
         td From #{bid.source} to #{bid.destination} at time #{bid.start_time}
         td #{bid.amount}
         td
-          a(class="btn btn-tiny btn-default" href="/bids/edit/#{bid.bid_id}") Edit
-        td
           a(class="btn btn-tiny btn-danger" href="/bids/delete/#{bid.bid_id}") Delete
         td
           a(class="btn btn-tiny btn-primary" href="/bids/acceptBid/#{bid.bid_id}") Accept

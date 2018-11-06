@@ -6,7 +6,16 @@ const login = require('../login');
 const passenger = require('../passenger_queries');
 const driver = require('../driver_queries');
 
-router.get('/', login.ensureAuthentication, passenger.getBids);
+router.get('/', login.ensureAuthentication, (req, res, next) => {
+    db.any('SELECT * FROM bids')
+        .then((data) => {
+            const bids = data;
+            res.render('bids', {bids : bids});
+        })
+        .catch((err) => {
+            return next(err);
+        });
+});
 
 // NEWLY ADDED BY ZC
 // DONE

@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db_connection');
 
-router.get('/', (req, res, next) => {
+router.get('/', ensureAuthentication, (req, res, next) => {
     db.any('SELECT * FROM users ORDER BY users.username')
         .then((data) => {
             res.render('admin', {users: data});
         })
         .catch((err) => {
             return next(err);
-        });
+        })
 });
 
 router.get('/:username', (req, res, next) => {
@@ -71,5 +71,18 @@ router.delete('/:username', (req, res, next) => {
             return next(err);
         });
 });
+
+function ensureAuthentication(req, res, next) {
+    if (currentUser == null) {
+        res.redirect('/');
+        req.flash('error_msg', 'Please login first');
+    } else if (currentUser == 'driver') {
+        res.redirect('/driverHome');
+    } else if (currentUser == 'passenger') {
+        res.redirect('/passengerHome');
+    } else {
+        next();
+    }
+}
 
 module.exports = router;

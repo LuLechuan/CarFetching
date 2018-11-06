@@ -23,10 +23,10 @@ router.get('/add_ride', (req, res, next) => {
     });
 })
 
-// CANNOT GET THIS TO LOAD
-// need add rideOwnder in rides.sql
+// DONE
 router.get('/own_rides', (req, res, next) => {
-    db.any('SELECT * FROM rides WHERE rideOwner = $1', currentUser)
+    const rideOwner = currentUser;
+    db.any('SELECT * FROM rides WHERE car IN (SELECT plate_number FROM cars WHERE driver = $1)', rideOwner)
         .then((data) => {
             const rides = data;
             res.render('own_rides', {rides : rides});

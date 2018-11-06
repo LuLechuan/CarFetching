@@ -5,7 +5,8 @@ var login = require('./login');
 
 module.exports = {
   createRide: createRide,
-  ownBids: ownBids
+  ownBids: ownBids,
+  acceptBid: acceptBid
   // updateBid: updateBid
 };
 
@@ -40,6 +41,22 @@ function ownBids(req, res, next) {
     .then(function (data) {
         const bids = data.map(d => d);
         res.render('own_bids', {bids: bids});
+    })
+    .catch(function (err) {
+        return next(err);
+    });
+}
+
+// NEW
+function acceptBid(req, res, next) {
+    currentCar = req.params.car;
+    db.result('DELETE FROM bids WHERE car = $1', currentCar)
+    .catch(function (err) {
+        return next(err);
+    });
+    db.result('DELETE FROM rides WHERE car = $1', currentCar)
+    .then(function (result) {
+        res.redirect('/bids');
     })
     .catch(function (err) {
         return next(err);

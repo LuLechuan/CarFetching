@@ -9,7 +9,11 @@ const driver = require('../driver_queries');
 router.get('/', login.ensureAuthentication, passenger.getBids);
 
 // NEWLY ADDED BY ZC
+// DONE
 router.get('/own_bids', login.ensureAuthentication, driver.ownBids);
+
+// NEWLY ADDED BY ZC
+router.get('/acceptBid/:car', login.ensureAuthentication, driver.acceptBid);
 
 router.get('/:bid_id', login.ensureAuthentication, passenger.getSingleBid);
 

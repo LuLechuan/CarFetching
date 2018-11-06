@@ -38,19 +38,6 @@ function getBids(req, res, next) {
     });
 }
 
-// DONE
-function ownBids(req, res, next) {
-    const rideOwner = currentUser;
-    db.any('SELECT * FROM bids WHERE car IN (SELECT plate_number FROM cars WHERE driver = $1)', rideOwner)
-    .then(function (data) {
-        const bids = data.map(d => d);
-        res.render('own_bids', {bids: bids});
-    })
-    .catch(function (err) {
-        return next(err);
-    });
-}
-
 function getSingleBid(req, res, next) {
     var bid_id = parseInt(req.params.bid_id);
     db.one('SELECT * FROM bids WHERE bid_id = $1', bid_id)

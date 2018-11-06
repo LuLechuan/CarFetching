@@ -32,6 +32,19 @@ function createRide(req, res, next) {
     });
 }
 
+// DONE
+function ownBids(req, res, next) {
+    const rideOwner = currentUser;
+    db.any('SELECT * FROM bids WHERE car IN (SELECT plate_number FROM cars WHERE driver = $1)', rideOwner)
+    .then(function (data) {
+        const bids = data.map(d => d);
+        res.render('own_bids', {bids: bids});
+    })
+    .catch(function (err) {
+        return next(err);
+    });
+}
+
 // function updateBid(req, res, next) {
 //   db.none('UPDATE bids SET amount = $1 where id=$2',
 //     [parseInt(req.body.amount), parseInt(req.params.id)])

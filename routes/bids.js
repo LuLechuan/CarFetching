@@ -4,11 +4,12 @@ const db = require('../db_connection');
 const login = require('../login');
 
 const passenger = require('../passenger_queries');
+const driver = require('../driver_queries');
 
 router.get('/', login.ensureAuthentication, passenger.getBids);
 
 // NEWLY ADDED BY ZC
-router.get('/own_bids', login.ensureAuthentication, passenger.ownBids);
+router.get('/own_bids', login.ensureAuthentication, driver.ownBids);
 
 router.get('/:bid_id', login.ensureAuthentication, passenger.getSingleBid);
 

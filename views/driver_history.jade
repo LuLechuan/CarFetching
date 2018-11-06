@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h2 Driver Past Rides
+
+  table(class='table table-striped')
+    tr
+      th History of rides
+      th
+    each ride, i in rides
+      tr
+        td
+          a(href='/rides/#{ride.ride_id}') #{ride.ride_id}
+        td From #{ride.source} to #{ride.destination} at time #{ride.start_time}

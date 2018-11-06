@@ -1,9 +1,6 @@
 DROP DATABASE IF EXISTS ourdatabase;
 CREATE DATABASE ourdatabase;
 
-DROP DATABASE IF EXISTS ourdatabase;
-CREATE DATABASE ourdatabase;
-
 DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
   username VARCHAR(128) PRIMARY KEY,
@@ -14,7 +11,43 @@ CREATE TABLE users (
   role VARCHAR(10) NOT NULL check(role = 'admin' OR role = 'driver' OR role = 'passenger')
 );
 
-INSERT INTO users VALUES('Oliver123','123njdidw','Oliver',20,'female','driver');
+DROP TABLE IF EXISTS allusers CASCADE;
+CREATE TABLE users_log (
+  operation CHAR(1) NOT NULL,
+  username VARCHAR(128) NOT NULL,
+  password VARCHAR(128) NOT NULL,
+  name VARCHAR(64) NOT NULL,
+  age INTEGER NOT NULL,
+  sex VARCHAR(8) NOT NULL check(sex = 'male' OR sex = 'female'),
+  role VARCHAR(10) NOT NULL check(role = 'admin' OR role = 'driver' OR role = 'passenger')
+);
+
+CREATE OR REPLACE FUNCTION users_log()
+RETURNS TRIGGER AS $$
+BEGIN
+IF (TG_OP = 'DELETE') THEN
+INSERT INTO users_log values('D', old.username, old.password, old.name, old.age, old.sex, old.role);
+RETURN OLD;
+ELSIF (TG_OP = 'UPDATE') THEN
+INSERT INTO users_log values('U', new.username, new.password, new.name, new.age, new.sex, new.role);
+RETURN NEW;
+ELSIF (TG_OP = 'INSERT') THEN
+INSERT INTO users_log values('I', new.username, new.password, new.name, new.age, new.sex, new.role);
+RETURN NEW;
+END IF;
+RETURN NULL;
+END; $$ LANGUAGE PLPGSQL;
+
+DROP TRIGGER users_log ON users;
+
+CREATE TRIGGER users_log
+AFTER INSERT OR UPDATE OR DELETE
+ON users
+FOR EACH ROW
+EXECUTE PROCEDURE users_log();
+
+
+INSERT INTO users VALUES('Oliver123','123njdidw123','Oliver',20,'female','driver');
 INSERT INTO users VALUES('Jack123','dwjwedjw','Jack',21,'male','driver');
 INSERT INTO users VALUES('Harry234','dedew31','Harry',22,'male','driver');
 INSERT INTO users VALUES('Jacob239','29jwe2','Jacob',24,'male','driver');
@@ -41,6 +74,10 @@ INSERT INTO users VALUES('Reece389','ejd229jd2','Reece',40,'female','passenger')
 INSERT INTO users VALUES('Margaret290','n293d2','Margaret',46,'female','passenger');
 INSERT INTO users VALUES('Linda821','32db832d','Linda',34,'female','passenger');
 
+INSERT INTO users VALUES('Sarah2','32db832d','Sarah',34,'female','passenger');
+INSERT INTO users VALUES('Michelle96','32db832d','Michelle',20,'female','driver');
+DELETE from users WHERE username = 'Michelle96';
+UPDATE users SET age = 44 WHERE username = 'Sarah2';
 
 -- INSERT INTO users (username, password, name, age, sex, role)
 -- VALUES ("Ahchuang", "123456", "LC", 23, "male", "driver");
@@ -54,7 +91,7 @@ CREATE TABLE cars (
   driver VARCHAR(128),
   capacity INT NOT NULL,
   model VARCHAR(64),
-  FOREIGN KEY (driver) REFERENCES users(username) ON DELETE CASCADE
+  FOREIGN KEY (driver) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO cars values ('SBW1234W', 'Oliver123', '5', 'Toyota');
@@ -83,8 +120,8 @@ CREATE TABLE rides (
   status VARCHAR(8) NOT NULL CHECK(status = 'pending' OR status = 'success' OR status = 'failed'),
   PRIMARY KEY (car, start_time, source, destination),
   CHECK (source <> destination),
-  FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE,
-  FOREIGN KEY (rideOwner) REFERENCES users(username) ON DELETE CASCADE
+  FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (rideOwner) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO rides values ('Oliver123', 1,'SBW1234W', '2018-10-11 04:05:06', 'Buona Vista', 'Bedok', 1, 'pending');
@@ -127,3 +164,4 @@ INSERT INTO bids values (7,'Margaret290','SBQ1214O','2018-10-11 08:30:00','Juron
 INSERT INTO bids values (8,'Reece389','SPP2342E','2018-10-10 10:30:00','Jurong West','Changi',22.5,'pending');
 INSERT INTO bids values (9,'Kyle283','SKK2322F','2018-10-11 12:30:00','Hougang','Woodland',12.5,'pending');
 INSERT INTO bids values (10,'Michael231','SII2452F','2018-10-10 23:30:00','Bartley','Tampines',31.5,'pending');
+

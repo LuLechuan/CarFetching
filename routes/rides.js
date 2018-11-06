@@ -17,14 +17,14 @@ router.get('/', login.ensureAuthentication, (req, res, next) => {
 });
 
 // DONE
-router.get('/add_ride', (req, res, next) => {
+router.get('/add_ride', login.ensureAuthentication, (req, res, next) => {
     res.render('add_ride', {
       title: 'Create ride'
     });
 })
 
 // DONE
-router.get('/own_rides', (req, res, next) => {
+router.get('/own_rides', login.ensureAuthentication, (req, res, next) => {
     const rideOwner = currentUser;
     db.any('SELECT * FROM rides WHERE car IN (SELECT plate_number FROM cars WHERE driver = $1) AND status = \'pending\'', rideOwner)
         .then((data) => {
@@ -34,6 +34,18 @@ router.get('/own_rides', (req, res, next) => {
         .catch((err) => {
             return next(err);
         });
+});
+
+// DONE
+router.get('/delete/:ride_id', login.ensureAuthentication, (req, res, next) => {
+    const ride_id = req.params.ride_id;
+    db.result('DELETE FROM rides WHERE ride_id = $1', ride_id)
+    .then(function (result) {
+        res.render('driverHome');
+    })
+    .catch(function (err) {
+        return next(err);
+    });
 });
 
 router.get('/:ride_id', login.ensureAuthentication, (req, res, next) => {
@@ -48,6 +60,7 @@ router.get('/:ride_id', login.ensureAuthentication, (req, res, next) => {
     });
 });
 
+/*
 // couldn't get this to work yet
 router.get('/:car/:start_time/:source/destination', (req, res, next) => {
     const car = req.params.car;
@@ -68,6 +81,7 @@ router.get('/:car/:start_time/:source/destination', (req, res, next) => {
             return next(err);
         });
 });
+*/
 
 //DONE
 router.post('/createRide', driver_queries.createRide);

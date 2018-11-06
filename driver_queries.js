@@ -38,7 +38,7 @@ function createRide(req, res, next) {
 // DONE
 function ownBids(req, res, next) {
     const rideOwner = currentUser;
-    db.any('SELECT * FROM bids WHERE car IN (SELECT plate_number FROM cars WHERE driver = $1) AND status = \'pending\'', rideOwner)
+    db.any('SELECT * FROM bids WHERE car IN (SELECT plate_number FROM cars WHERE driver = $1) AND status = \'pending\' ORDER BY amount DESC', rideOwner)
     .then(function (data) {
         const bids = data.map(d => d);
         res.render('own_bids', {bids: bids});

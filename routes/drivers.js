@@ -3,8 +3,9 @@ const router = express.Router();
 
 const driver = require('../driver_queries');
 const db = require('../db_connection');
+const login = require('../login');
 
-router.get('/history', (req, res, next) => {
+router.get('/history', login.ensureAuthentication, (req, res, next) => {
     db.any('SELECT * From rides WHERE car IN (SELECT plate_number FROM cars WHERE driver = $1) AND status = \'success\'', currentUser)
     .then((data) => {
         const rides = data;

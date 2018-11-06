@@ -2,6 +2,9 @@ extends layout
 
 block content
   h1 #{title}
+  if errors
+    for each in errors
+      p.error #{each.msg}
   form(method='post', action='/bids/add')
     .form-group
       input(name='ride_id', type='hidden', value='#{ride_id}')

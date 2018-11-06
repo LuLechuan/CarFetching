@@ -119,8 +119,7 @@ CREATE TABLE rides (
   status VARCHAR(8) NOT NULL CHECK(status = 'pending' OR status = 'success' OR status = 'failed'),
   PRIMARY KEY (car, start_time, source, destination),
   CHECK (source <> destination),
-  FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (rideOwner) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO rides values (1,'SBW1234W', '2018-10-11 04:05:06', 'Buona Vista', 'Bedok', 1, 'pending');
@@ -149,7 +148,7 @@ CREATE TABLE bids (
   status VARCHAR(8) NOT NULL CHECK(status = 'pending' OR status = 'success' OR status = 'failed'),
   PRIMARY KEY (passenger, car, start_time, source, destination),
   FOREIGN KEY (passenger) REFERENCES users(username) ON DELETE CASCADE,
-  FOREIGN KEY (car, start_time, source, destination) REFERENCES rides(car, start_time, source, destination) ON DELETE CASCADE
+  FOREIGN KEY (car, start_time, source, destination) REFERENCES rides(car, start_time, source, destination) ON DELETE CASCADE ON UPDATE DELETE
 );
 
 INSERT INTO bids values (1,'Ava923','SBW1234W','2018-10-11 04:05:06','Buona Vista','Bedok',10.5,'pending');

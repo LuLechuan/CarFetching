@@ -1,0 +1,17 @@
+block content
+    h1 #{title}
+    form(method='POST', action='/admin/cars/edit/#{car.plate_number}')
+        .form-group
+            label Plate_number:
+            input(name='plate_number', type='text', value = '#{car.plate_number}')
+        .form-group
+            label Driver:
+            input(name='driver', type='text', value = '#{car.driver}')
+        .form-group
+            label Capacity:
+            input(name='capacity', type='text', value = '#{car.capacity}')
+        .form-group
+            label Model:
+            input(name='model', , type='text', value = '#{car.model}')
+        input(type='submit', name='submit', value='Save Changes')
+        a(class="btn btn-tiny btn-default" href='/admin/users') Back

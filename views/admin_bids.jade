@@ -1,0 +1,64 @@
+extends layout
+
+block content
+    head
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='/stylesheets/style_admin.css')
+    body
+        .topnav
+            a(href='/admin/users') Users
+            a(href='/admin/cars') Cars
+            a(href='/admin/rides') Rides
+            a.active(href='/admin/bids') Bids
+    h1
+    ul
+        form.form-inline(method='POST', action='/admin/bids')
+            .form-group
+                label Bid_id:
+                input(name='bid_id', type='text', size='10')
+            .form-group
+                label Passenger:
+                input(name='passenger', type='text', size='5')
+            .form-group
+                label Car:
+                input(name='car', type='text', size='5')
+            .form-group
+                label Start time:
+                input(name='start_time', , type='text', size='5')
+            .form-group
+                label Source:
+                input(name='source', type='text', size='5')
+            .form-group
+                label Destination:
+                input(name='destination', type='text', size='5')
+            .form-group
+                label Amount:
+                input(name='amount', type='text', size='5')
+            .form-group
+                label Status:
+                input(name='status', type='text', size='5', maxlength="8")
+            input(type='submit', name='submit', value='Add')
+        table(class='table table-striped')
+            tr
+                th Bid_id
+                th Passenger
+                th Car
+                th start time
+                th source
+                th destination
+                th amount
+                th status
+                th
+            each bid in bids
+                tr
+                    td #{bid.bid_id}
+                    td #{bid.passenger}
+                    td #{bid.car}
+                    td #{bid.start_time}
+                    td #{bid.source}
+                    td #{bid.destination}
+                    td #{bid.amount}
+                    td #{bid.status}
+                    td
+                        a.btn.btn-tiny.btn-primary(href="/admin/bids/edit/#{bid.bid_id}") Edit
+                        a.btn.btn-tiny.btn-danger.deleteBid(href="#", data-id = '#{bid.bid_id}') Delete

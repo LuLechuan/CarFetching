@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    head
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='/stylesheets/style_admin.css')
+    body
+        .topnav
+            a(href='/admin/users') Users
+            a.active(href='/admin/cars') Cars
+            a(href='/admin/rides') Rides
+            a(href='/admin/bids') Bids
+    h1
+    ul
+        form.form-inline(method='POST', action='/admin/cars')
+            .form-group
+                label Plate_number:
+                input(name='plate_number', type='text', size='10')
+            .form-group
+                label Driver:
+                input(name='driver', type='text', size='5')
+            .form-group
+                label Capacity:
+                input(name='capacity', type='text', size='5')
+            .form-group
+                label Model:
+                input(name='model', , type='text', size='5', maxlength="6")
+            input(type='submit', name='submit', value='Add')
+        table(class='table table-striped')
+            tr
+                th Plate number
+                th Driver
+                th Capacity
+                th Model
+                th
+            each car in cars
+                tr
+                    td #{car.plate_number}
+                    td #{car.driver}
+                    td #{car.capacity}
+                    td #{car.model}
+                    td
+                        a.btn.btn-tiny.btn-primary(href="/admin/cars/edit/#{car.plate_number}") Edit
+                        a.btn.btn-tiny.btn-danger.deleteCar(href="#", data-id = '#{car.plate_number}') Delete

@@ -17,13 +17,13 @@ html
           a(href='/bids') View all current bids
           a(href='/bids/own_bids') View current bids for own rides
           a(href='/logout') Log out
-      else 
+      else
         .topnav
           a.active(href='/passengerHome') Home
-          a(href='/rides') View Rides Available
+          a(href='/passengers/rides') View Rides Available
           a(href='/passengers/bids') View bids record
           a(href='/logout') Log out
-    else 
+    else
       .topnav
         a.active(href='/') Home
         a(href='/login') Login
@@ -31,8 +31,8 @@ html
         a(href='/about') About
 
 
-    
-      
+
+
 
   block content
     if success_msg

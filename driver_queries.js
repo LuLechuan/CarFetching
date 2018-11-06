@@ -4,7 +4,9 @@ var login = require('./login');
 // add query functions
 
 module.exports = {
-  createRide: createRide
+  createRide: createRide,
+  ownBids: ownBids,
+  acceptBid: acceptBid
   // updateBid: updateBid
 };
 
@@ -29,6 +31,39 @@ function createRide(req, res, next) {
     })
     .catch(function (err) {
       return next(err);
+    });
+}
+
+// DONE
+function ownBids(req, res, next) {
+    const rideOwner = currentUser;
+    db.any('SELECT * FROM bids WHERE car IN (SELECT plate_number FROM cars WHERE driver = $1) AND status = \'pending\'', rideOwner)
+    .then(function (data) {
+        const bids = data.map(d => d);
+        res.render('own_bids', {bids: bids});
+    })
+    .catch(function (err) {
+        return next(err);
+    });
+}
+
+// DONE
+function acceptBid(req, res, next) {
+    bid_id = req.params.bid_id;
+    db.result('UPDATE bids SET status = \'success\' WHERE bid_id = $1', bid_id)
+    .catch(function (err) {
+        return next(err);
+    });
+    db.result('UPDATE bids SET status = \'failed\' WHERE bid_id <> $1 AND car IN (SELECT car FROM bids WHERE bid_id = $1)', bid_id)
+    .catch(function (err) {
+        return next(err);
+    });
+    db.result('UPDATE rides SET status = \'success\' WHERE car IN (SELECT car FROM bids WHERE bid_id = $1)', bid_id)
+    .then(function (result) {
+        res.redirect('/bids');
+    })
+    .catch(function (err) {
+        return next(err);
     });
 }
 

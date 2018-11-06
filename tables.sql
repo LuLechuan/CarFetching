@@ -121,6 +121,7 @@ CREATE TABLE rides (
   CHECK (source <> destination),
   FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (rideOwner) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
+
 );
 
 INSERT INTO rides values (1,'SBW1234W', '2018-10-11 04:05:06', 'Buona Vista', 'Bedok', 1, 'pending');

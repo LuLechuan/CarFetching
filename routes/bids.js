@@ -4,9 +4,10 @@ const db = require('../db_connection');
 const login = require('../login');
 
 const passenger = require('../passenger_queries');
+const driver = require('../driver_queries');
 
 router.get('/', login.ensureAuthentication, (req, res, next) => {
-    db.any('SELECT * FROM bids')
+    db.any('SELECT * FROM bids WHERE status = \'pending\'')
         .then((data) => {
             const bids = data;
             res.render('bids', {bids : bids});
@@ -17,7 +18,11 @@ router.get('/', login.ensureAuthentication, (req, res, next) => {
 });
 
 // NEWLY ADDED BY ZC
-router.get('/own_bids', login.ensureAuthentication, passenger.ownBids);
+// DONE
+router.get('/own_bids', login.ensureAuthentication, driver.ownBids);
+
+// NEWLY ADDED BY ZC
+router.get('/acceptBid/:bid_id', login.ensureAuthentication, driver.acceptBid);
 
 router.get('/:bid_id', login.ensureAuthentication, passenger.getSingleBid);
 

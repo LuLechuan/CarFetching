@@ -60,10 +60,12 @@ function loginAction(req, res, next) {
          currentUser = username;
          userrole = user.role;
          if (userrole == 'driver') {
+           currentDriver = userrole;
            res.redirect('/driverHome');
          } else if (userrole == 'admin') {
            res.redirect('/admin/users');
          } else {
+           currentPassenger = userrole;
            res.redirect('/passengerHome');
          }
        })
@@ -82,6 +84,8 @@ function loginAction(req, res, next) {
 
 function logout(req, res, next) {
   currentUser = null;
+  currentDriver = null;
+  currentPassenger = null;
   req.flash('success_msg', 'Logout Success');
   res.redirect('/');
 }

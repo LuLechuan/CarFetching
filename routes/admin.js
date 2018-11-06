@@ -3,13 +3,13 @@ const router = express.Router();
 const db = require('../db_connection');
 
 router.get('/', ensureAuthentication, (req, res, next) => {
-        db.any('SELECT * FROM users ORDER BY users.username')
-            .then((data) => {
-                res.render('admin', {users: data});
-            })
-            .catch((err) => {
-                return next(err);
-            })
+    db.any('SELECT * FROM users ORDER BY users.username')
+        .then((data) => {
+            res.render('admin', {users: data});
+        })
+        .catch((err) => {
+            return next(err);
+        })
 });
 
 router.get('/:username', (req, res, next) => {

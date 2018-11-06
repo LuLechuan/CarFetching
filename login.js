@@ -1,5 +1,4 @@
 var db = require('./db_connection');
-var currentuser;
 
 // add query functions
 
@@ -50,7 +49,6 @@ function signUp(req, res, next) {
 function loginAction(req, res, next) {
   const username = req.body.username;
   const password = req.body.password;
-  currentuser = username;
 
   db.one('SELECT EXISTS (SELECT * FROM users u WHERE u.username = $1 AND u.password = $2 )',
    [username, password])

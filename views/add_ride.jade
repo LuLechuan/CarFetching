@@ -4,9 +4,6 @@ block content
   h1 #{title}
   form(method='post', action='/rides/createRide')
     .form-group
-      label Ride_ID:
-      input(name='ride_id', type='text')
-    .form-group
       label Car:
       input(name='car', type='text')
     .form-group
@@ -21,9 +18,6 @@ block content
     .form-group
       label Number of Passengers:
       input(name='number_passenger', type='text')
-    .form-group
-      label Status:
-      input(name='status', type='text')
     input(type='submit', name='submit', value='Save')
 
     a(href='/passengers/rides') Back

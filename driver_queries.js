@@ -11,23 +11,24 @@ module.exports = {
 };
 
 function createRide(req, res, next) {
-  const rideOwner = login.currentuser;
-  const ride_id = req.body.ride_id;
   const car = req.body.car;
   const start_time = req.body.start_time;
   const source = req.body.source;
   const destination = req.body.destination;
   const number_passenger = req.body.number_passenger;
-  const status = req.body.status;
-
-  db.none('INSERT INTO rides (rideOwner, ride_id, car, start_time, source, destination, number_passenger, status) values ($1, $2, $3, $4, $5, $6, $7, $8)',
-    [rideOwner, ride_id, car, start_time, source, destination, number_passenger, status])
-    .then(function () {
-      res.status(200)
-        .json({
-          status: 'success',
-          message: 'Created a ride'
-        });
+  const status = 'pending';
+  db.one('SELECT MAX(ride_id) FROM rides')
+    .then(data => {
+        var ride_id = parseInt(data.max) + 1;
+        db.none('INSERT INTO rides (ride_id, car, start_time, source, destination, number_passenger, status) values ($1, $2, $3, $4, $5, $6, $7)',
+          [ride_id, car, start_time, source, destination, number_passenger, status])
+          .then(function () {
+            res.status(200)
+              .json({
+                status: 'success',
+                message: 'Created a ride'
+            });
+          })
     })
     .catch(function (err) {
       return next(err);

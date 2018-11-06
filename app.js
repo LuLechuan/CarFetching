@@ -16,6 +16,7 @@ const cars = require('./routes/cars');
 const rides = require('./routes/rides');
 const bids = require('./routes/bids');
 const passengers = require('./routes/passengers');
+const drivers = require('./routes/drivers');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -79,5 +80,6 @@ app.use('/cars', cars);
 app.use('/rides', rides);
 app.use('/bids', bids);
 app.use('/passengers', passengers);
+app.use('/drivers', drivers);
 
 module.exports = app;

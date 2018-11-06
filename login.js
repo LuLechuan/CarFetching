@@ -6,7 +6,7 @@ module.exports = {
   signUp : signUp,
   loginAction : loginAction,
   logout: logout,
-  ensureAuthentication: ensureAuthentication
+  ensureAuthentication: ensureAuthentication,
 };
 
 function signUp(req, res, next) {
@@ -62,6 +62,8 @@ function loginAction(req, res, next) {
          if (userrole == 'driver') {
            currentDriver = userrole;
            res.redirect('/driverHome');
+         } else if (userrole == 'admin') {
+           res.redirect('/admin');
          } else {
            currentPassenger = userrole;
            res.redirect('/passengerHome');

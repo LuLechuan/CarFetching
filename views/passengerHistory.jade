@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h2 History
+
+  table(class='table table-striped')
+    tr
+      th Bid History
+      th
+    each bid, i in bids
+      tr
+        td From #{bid.source} to #{bid.destination} at time #{bid.start_time}
+        td #{bid.amount}
+        td #{bid.status}

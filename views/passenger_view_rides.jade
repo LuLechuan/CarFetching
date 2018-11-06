@@ -5,7 +5,9 @@ block content
 
   table(class='table table-striped')
     tr
-      th Rides available
+      form(method='get', action='/passengers/rides')
+        input(name='search')
+        input(type='submit', name='submit', value='Search')
       th
     each ride, i in rides
       tr

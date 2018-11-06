@@ -17,11 +17,6 @@ router.get('/bids/edit/:id', (req, res, next) => {
   res.render('edit_bid', {title: 'Update Bid'});
 });
 
-// router.get('/bid/add', db.createBid);
-// router.get('/rides', db.getAllRides);
-// router.get('/bid', db.getBids);
-// router.post('/bid', db.createBid);
-// router.put('/bid/:id', db.updateBid);
-// router.delete('/bid/:id', db.removeBid);
+router.get('/history', passenger.viewHistory);
 
 module.exports = router;

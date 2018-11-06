@@ -46,16 +46,31 @@ function ownBids(req, res, next) {
 
 // DONE
 function acceptBid(req, res, next) {
+    var car;
+    var start_time;
+    var source;
+    var destination;
     bid_id = req.params.bid_id;
     db.result('UPDATE bids SET status = \'success\' WHERE bid_id = $1', bid_id)
     .catch(function (err) {
         return next(err);
     });
-    db.result('UPDATE bids SET status = \'failed\' WHERE bid_id <> $1 AND car IN (SELECT car FROM bids WHERE bid_id = $1)', bid_id)
+    db.one('SELECT car, start_time, source, destination FROM bids WHERE bid_id = $1', bid_id)
+    .then(data => {
+        car = data[0];
+        start_time = data[1];
+        source = data[2];
+        destination = data[3];
+    })
     .catch(function (err) {
         return next(err);
     });
-    db.result('UPDATE rides SET status = \'success\' WHERE car IN (SELECT car FROM bids WHERE bid_id = $1)', bid_id)
+
+    db.result('UPDATE bids SET status = \'failed\' WHERE car = $1 AND start_time = $2 AND source = $3 AND destination = $4 AND bid_id <> $5', car, start_time, source, destination, bid_id)
+    .catch(function (err) {
+        return next(err);
+    });
+    db.result('UPDATE rides SET status = \'success\' WHERE car = $1 AND start_time = $2 AND source = $3 AND destination = $4', car, start_time, source, destination)
     .then(function (result) {
         res.redirect('/bids');
     })

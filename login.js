@@ -6,7 +6,7 @@ module.exports = {
   signUp : signUp,
   loginAction : loginAction,
   logout: logout,
-  ensureAuthentication: ensureAuthentication
+  ensureAuthentication: ensureAuthentication,
 };
 
 function signUp(req, res, next) {
@@ -60,8 +60,12 @@ function loginAction(req, res, next) {
          currentUser = username;
          userrole = user.role;
          if (userrole == 'driver') {
+           currentDriver = userrole;
            res.redirect('/driverHome');
+         } else if (userrole == 'admin') {
+           res.redirect('/admin');
          } else {
+           currentPassenger = userrole;
            res.redirect('/passengerHome');
          }
        })
@@ -80,6 +84,8 @@ function loginAction(req, res, next) {
 
 function logout(req, res, next) {
   currentUser = null;
+  currentDriver = null;
+  currentPassenger = null;
   req.flash('success_msg', 'Logout Success');
   res.redirect('/');
 }

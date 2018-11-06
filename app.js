@@ -71,6 +71,8 @@ app.use(expressValidator({
 }));
 
 currentUser = null;
+currentDriver = null;
+currentPassenger = null;
 
 app.use('/', index);
 app.use('/admin', admin);

@@ -3,11 +3,43 @@ html
   head
     title= title
     link(rel="stylesheet", href="/bower_components/bootstrap/dist/css/bootstrap.css")
+    link(rel='stylesheet', href='/stylesheets/style_nav.css')
 
   body
+  block navbar
+    if (currentUser)
+      if (currentDriver)
+        .topnav
+          a.active(href='/driverHome') Home
+          a(href='/rides/add_ride') Create ride
+          a(href='/rides') View all current rides
+          a(href='/rides/own_rides') View own current rides
+          a(href='/bids') View all current bids
+          a(href='/bids/own_bids') View current bids for own rides
+          a(href='/logout') Log out
+      else 
+        .topnav
+          a.active(href='/passengerHome') Home
+          a(href='/rides') View Rides Available
+          a(href='/passengers/bids') View bids record
+          a(href='/logout') Log out
+    else 
+      .topnav
+        a.active(href='/') Home
+        a(href='/login') Login
+        a(href='/register') Sign Up
+        a(href='/about') About
+
+
+    
+      
+
   block content
     if success_msg
       p #{success_msg}
     if error_msg
       p #{error_msg}
 
+  script(src='/bower_components/jquery/dist/jquery.js')
+  script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+  script(src='/js/main.js')

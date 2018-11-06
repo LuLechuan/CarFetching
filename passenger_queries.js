@@ -15,15 +15,27 @@ module.exports = {
 };
 
 function getRides(req, res, next) {
-    // const currTime = new Date();
+  if (req.query.search == null || req.query.search == '') {
     db.any('SELECT * From rides WHERE status = \'pending\'')
-    .then(function (data) {
+      .then(function (data) {
         const rides = data.map(r => r);
         res.render('passenger_view_rides', {rides: rides});
-    })
-    .catch(function (err) {
+      })
+      .catch(function (err) {
         return next(err);
-    });
+      });
+  } else {
+    var searchKey = req.query.search;
+    query = 'SELECT * From rides r WHERE r.status = \'pending\' AND (r.source LIKE \'%' + searchKey + '%\' OR r.destination LIKE \'%' + searchKey + '%\')'
+    db.any(query)
+      .then(function (data) {
+        const rides = data.map(r => r);
+        res.render('passenger_view_rides', {rides: rides});
+      })
+      .catch(function (err) {
+        return next(err);
+      });
+  }
 }
 
 function getBids(req, res, next) {

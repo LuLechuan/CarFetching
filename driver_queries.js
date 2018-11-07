@@ -55,6 +55,7 @@ function acceptBid(req, res, next) {
     .catch(function (err) {
         return next(err);
     });
+    /*
     db.one('SELECT car, start_time, source, destination FROM bids WHERE bid_id = $1', bid_id)
     .then(data => {
         car = data[0];
@@ -65,12 +66,13 @@ function acceptBid(req, res, next) {
     .catch(function (err) {
         return next(err);
     });
+    */
 
-    db.result('UPDATE bids SET status = \'failed\' WHERE car = $1 AND start_time = $2 AND source = $3 AND destination = $4 AND bid_id <> $5', car, start_time, source, destination, bid_id)
+    db.result('UPDATE bids SET status = \'failed\' WHERE car IN (SELECT car FROM bids WHERE bid_id = $1) AND start_time IN (SELECT start_time FROM bids WHERE bid_id = $1) AND source IN (SELECT source FROM bids WHERE bid_id = $1) AND destination IN (SELECT destination FROM bids WHERE bid_id = $1) AND bid_id <> $1', bid_id)
     .catch(function (err) {
         return next(err);
     });
-    db.result('UPDATE rides SET status = \'success\' WHERE car = $1 AND start_time = $2 AND source = $3 AND destination = $4', car, start_time, source, destination)
+    db.result('UPDATE rides SET status = \'success\' WHERE car IN (SELECT car FROM bids WHERE bid_id = $1) AND start_time IN (SELECT start_time FROM bids WHERE bid_id = $1) AND source IN (SELECT source FROM bids WHERE bid_id = $1) AND destination IN (SELECT destination FROM bids WHERE bid_id = $1)', bid_id)
     .then(function (result) {
         res.redirect('/bids');
     })

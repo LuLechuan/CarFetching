@@ -47,7 +47,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE users_log();
 
 
-INSERT INTO users VALUES('Oliver123','123njdidw123','Oliver',20,'female','driver');
+INSERT INTO users VALUES('Oliver123','123njdidw','Oliver',20,'female','driver');
 INSERT INTO users VALUES('Jack123','dwjwedjw','Jack',21,'male','driver');
 INSERT INTO users VALUES('Harry234','dedew31','Harry',22,'male','driver');
 INSERT INTO users VALUES('Jacob239','29jwe2','Jacob',24,'male','driver');
@@ -119,9 +119,7 @@ CREATE TABLE rides (
   status VARCHAR(8) NOT NULL CHECK(status = 'pending' OR status = 'success' OR status = 'failed'),
   PRIMARY KEY (car, start_time, source, destination),
   CHECK (source <> destination),
-  FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (rideOwner) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
-
+  FOREIGN KEY (car) REFERENCES cars(plate_number) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO rides values (1,'SBW1234W', '2018-10-11 04:05:06', 'Buona Vista', 'Bedok', 1, 'pending');
@@ -135,6 +133,7 @@ INSERT INTO rides values (7,'SBQ1214O', '2018-10-11 08:30:00', 'Jurong West', 'N
 INSERT INTO rides values (8,'SPP2342E', '2018-10-10 10:30:00', 'Jurong West', 'Changi', 1, 'pending');
 INSERT INTO rides values (9,'SKK2322F', '2018-10-11 12:30:00', 'Hougang', 'Woodland', 3, 'pending');
 INSERT INTO rides values (10,'SII2452F', '2018-10-10 23:30:00', 'Bartley', 'Tampines', 2, 'pending');
+INSERT INTO rides values (11,'SBW1234W', '2018-11-07 17:00:00', 'Changi Airport', 'NUS', 3, 'pending');
 
 -- INSERT INTO rides values ("A012324M", "2017-07-23", "Buona Vista", "Bedok", 1, "pending");
 
@@ -164,4 +163,4 @@ INSERT INTO bids values (7,'Margaret290','SBQ1214O','2018-10-11 08:30:00','Juron
 INSERT INTO bids values (8,'Reece389','SPP2342E','2018-10-10 10:30:00','Jurong West','Changi',22.5,'pending');
 INSERT INTO bids values (9,'Kyle283','SKK2322F','2018-10-11 12:30:00','Hougang','Woodland',12.5,'pending');
 INSERT INTO bids values (10,'Michael231','SII2452F','2018-10-10 23:30:00','Bartley','Tampines',31.5,'pending');
-
+INSERT INTO bids values (11,'Abigail223','SBW1234W','2018-11-07 17:00:00','Changi Airport','NUS',200,'pending');

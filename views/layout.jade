@@ -11,18 +11,21 @@ html
       if (currentDriver)
         .topnav
           a.active(href='/driverHome') Home
-          a(href='/rides/add_ride') Create ride
-          a(href='/rides') View all current rides
-          a(href='/rides/own_rides') View own current rides
-          a(href='/bids/own_bids') View current bids for own rides
-          a(href='/drivers/history') History
-          a(href='/logout') Log out
+          a(href='/rides/add_ride') Create Ride
+          a(href='/passengers/rides') All Current Rides
+          a(href='/rides/own_rides') Own Current Rides As Driver
+          a(href='/bids/own_bids') Current Bids For Own Rides As Driver
+          a(href='/passengers/bids') Own Current Bids As Passenger
+          a(href='/drivers/history') Past Rides As Driver
+          a(href='/passengers/history') Past Bids As Passenger
+          a(href='/logout') Logout
       else
         .topnav
           a.active(href='/passengerHome') Home
-          a(href='/passengers/rides') View Rides Available
-          a(href='/passengers/bids') View bids record
-          a(href='/logout') Log out
+          a(href='/passengers/rides') All Current Rides
+          a(href='/passengers/bids') Own Current Bids As Passenger
+          a(href='/passengers/history') Past Bids As Passenger
+          a(href='/logout') Logout
     else
       .topnav
         a.active(href='/') Home

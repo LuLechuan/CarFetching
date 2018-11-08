@@ -1,15 +1,19 @@
 extends layout
 
 block content
-  h2 Available Rides
+  h2 All Available Rides
 
   table(class='table table-striped')
     tr
+      th As a passenger, here are the rides that you can bid
       form(method='get', action='/passengers/rides')
         input(name='search')
         input(type='submit', name='submit', value='Search')
       th
     each ride, i in rides
       tr
-        td #{ride.ride_id}
+        td
+          a(href='/rides/#{ride.ride_id}') #{ride.ride_id}
         td From #{ride.source} to #{ride.destination} at time #{ride.start_time}
+        td
+          a(href='/passengers/bids/add/#{ride.ride_id}') Bid

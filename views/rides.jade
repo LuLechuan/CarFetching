@@ -1,11 +1,14 @@
 extends layout
 
 block content
-  h2 Available Rides
+  h2 All Available Rides
 
   table(class='table table-striped')
     tr
-      th Rides available
+      th As a passenger, here are the rides that you can bid
+      form(method='get', action='/passengers/rides')
+        input(name='search')
+        input(type='submit', name='submit', value='Search')
       th
     each ride, i in rides
       tr

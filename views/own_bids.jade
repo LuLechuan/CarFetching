@@ -1,12 +1,11 @@
 extends layout
 
 block content
-  h2 Bids for Own Rides
+  h2 Bids For Driver's Own Rides
 
   table(class='table table-striped')
     tr
-      th All bids We Have
-      th
+      th As a driver, here are the bids for your own rides
     each bid, i in bids
       tr
         td Passenger: #{bid.passenger}

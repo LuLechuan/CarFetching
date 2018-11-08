@@ -15,14 +15,16 @@ html
           a(href='/passengers/rides') View all current rides
           a(href='/rides/own_rides') View own current rides
           a(href='/bids/own_bids') View current bids for own rides as driver
-          a(href='/passengers/bids') View bids record as passenger
+          a(href='/passengers/bids') View own current bids as passenger
           a(href='/drivers/history') Past rides as driver
+          a(href='/passengers/history') Past bids as passenger
           a(href='/logout') Logout
       else
         .topnav
           a.active(href='/passengerHome') Home
           a(href='/passengers/rides') View all current rides
-          a(href='/passengers/bids') View bids record as passenger
+          a(href='/passengers/bids') View own current bids as passenger
+          a(href='/passengers/history') Past bids as passenger
           a(href='/logout') Logout
     else
       .topnav

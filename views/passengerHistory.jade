@@ -1,14 +1,15 @@
 extends layout
 
 block content
-  h2 History
+  h2 Past Bids
 
   table(class='table table-striped')
     tr
-      th Bid History
+      th As a passenger, here are your results of past bids
       th
     each bid, i in bids
       tr
+        td #{bid.bid_id}
         td From #{bid.source} to #{bid.destination} at time #{bid.start_time}
         td #{bid.amount}
         td #{bid.status}

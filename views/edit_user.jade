@@ -2,7 +2,7 @@ extends layout
 
 block content
     h1 #{title}
-    form(method='POST', action='/admin/edit/#{user.username}')
+    form(method='POST', action='/admin/users/edit/#{user.username}')
         .form-group
             label Username:
             input(name='username', type='text', value = '#{user.username}')

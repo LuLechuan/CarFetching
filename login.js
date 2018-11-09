@@ -63,7 +63,7 @@ function loginAction(req, res, next) {
            currentDriver = userrole;
            res.redirect('/driverHome');
          } else if (userrole == 'admin') {
-           res.redirect('/admin');
+           res.redirect('/admin/users');
          } else {
            currentPassenger = userrole;
            res.redirect('/passengerHome');

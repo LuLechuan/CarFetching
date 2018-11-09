@@ -1,0 +1,26 @@
+block content
+    h1 #{title}
+    form(method='POST', action='/admin/rides/edit/#{ride.ride_id}')
+        .form-group
+            label Ride_id:
+            input(name='Ride_id', type='text', value = '#{ride.ride_id}')
+        .form-group
+            label Car:
+            input(name='car', type='text', value = '#{ride.car}')
+        .form-group
+            label Start_time:
+            input(name='start_time', type='text', value = '#{ride.start_time}')
+        .form-group
+            label Source:
+            input(name='source', , type='text', value = '#{ride.source}')
+        .form-group
+            label Destination:
+            input(name='destination', type='text', value = '#{ride.destination}')
+        .form-group
+            label Number_passenger:
+            input(name='number_passenger', type='text', value = '#{ride.number_passenger}')
+        .form-group
+            label Status:
+            input(name='status', type='text', size='5', value = '#{ride.status}')
+        input(type='submit', name='submit', value='Save Changes')
+        a(class="btn btn-tiny btn-default" href='/admin/rides') Back

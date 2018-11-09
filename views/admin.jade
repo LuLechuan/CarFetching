@@ -1,9 +1,18 @@
 extends layout
 
 block content
-  h1 Admin Page
+  head
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/stylesheets/style_admin.css')
+  body
+    .topnav
+      a.active(href='/admin/users') Users
+      a(href='/admin/cars') Cars
+      a(href='/admin/rides') Rides
+      a(href='/admin/bids') Bids
+  h1
   ul
-    form.form-inline(method='POST', action='/admin/')
+    form.form-inline(method='POST', action='/admin/users')
       .form-group
         label Username:
         input(name='username', type='text', size='10')
@@ -15,10 +24,10 @@ block content
         input(name='name', type='text', size='5')
       .form-group
         label Age:
-        input(name='age', , type='text', size='5', maxlength="6")
+        input(name='age', , type='text', size='5', maxlength="3")
       .form-group
         label Sex:
-        input(name='sex', type='text', size='5', maxlength="")
+        input(name='sex', type='text', size='5', maxlength="6")
       .form-group
         label Role:
         input(name='role', type='text', size='5', maxlength="9")
@@ -41,5 +50,5 @@ block content
           td #{user.sex}
           td #{user.role}
           td
-            a.btn.btn-tiny.btn-primary(href="/admin/edit/#{user.username}") Edit
+            a.btn.btn-tiny.btn-primary(href="/admin/users/edit/#{user.username}") Edit
             a.btn.btn-tiny.btn-danger.delete(href="#", data-id = '#{user.username}') Delete

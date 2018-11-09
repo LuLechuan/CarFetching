@@ -25,6 +25,7 @@ function signUp(req, res, next) {
   req.checkBody('sex', 'Sex field is required').notEmpty();
   req.checkBody('age', 'Age is required').notEmpty();
   req.checkBody('role', 'Role is required').notEmpty();
+  req.checkBody('role', 'Role must either be driver or passenger').optional().matches("driver|passenger");
 
   let errors = req.validationErrors();
   if (errors) {

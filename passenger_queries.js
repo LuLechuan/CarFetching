@@ -92,50 +92,50 @@ function createBid(req, res, next) {
                         return [];
                     });
                 })
-                .then(events => {
-                    res.redirect('/passengers/bids');
-                })
-                .catch(error => {
-                    return next(error);
-                });
-            }
-        }
+        .then(events => {
+            res.redirect('/passengers/bids');
+        })
+        .catch(error => {
+            return next(error);
+        });
+    }
+}
 
-        function getEditPage(req, res, next) {
-            const bid_id = parseInt(req.params.bid_id);
-            res.render('edit_bid', {title: 'Edit Bid', bid_id: bid_id});
-        }
+function getEditPage(req, res, next) {
+    const bid_id = parseInt(req.params.bid_id);
+    res.render('edit_bid', {title: 'Edit Bid', bid_id: bid_id});
+}
 
-        function updateBid(req, res, next) {
-            db.none('UPDATE bids SET amount = $1 where bid_id=$2',
-            [parseInt(req.body.amount), parseInt(req.body.bid_id)])
-            .then(function () {
-                res.redirect('/passengers/bids');
-            })
-            .catch(function (err) {
-                return next(err);
-            });
-        }
+function updateBid(req, res, next) {
+    db.none('UPDATE bids SET amount = $1 where bid_id=$2',
+    [parseInt(req.body.amount), parseInt(req.body.bid_id)])
+    .then(function () {
+        res.redirect('/passengers/bids');
+    })
+    .catch(function (err) {
+        return next(err);
+    });
+}
 
-        function deleteBid(req, res, next) {
-            const bid_id = req.params.bid_id;
-            db.result('DELETE FROM bids WHERE bid_id = $1', bid_id)
-            .then(function (result) {
-                res.redirect('/passengers/bids');
-            })
-            .catch(function (err) {
-                return next(err);
-            });
-        }
+function deleteBid(req, res, next) {
+    const bid_id = req.params.bid_id;
+    db.result('DELETE FROM bids WHERE bid_id = $1', bid_id)
+    .then(function (result) {
+        res.redirect('/passengers/bids');
+    })
+    .catch(function (err) {
+        return next(err);
+    });
+}
 
-        function viewHistory(req, res, next) {
-            db.any('SELECT * From bids WHERE passenger = $1', currentUser)
-            .then(function (data) {
-                const bids = data.map(d => d);
+function viewHistory(req, res, next) {
+    db.any('SELECT * From bids WHERE passenger = $1', currentUser)
+    .then(function (data) {
+        const bids = data.map(d => d);
 
-                res.render('passengerHistory', {bids: bids});
-            })
-            .catch(function (err) {
-                return next(err);
-            });
-        }
+        res.render('passengerHistory', {bids: bids});
+    })
+    .catch(function (err) {
+        return next(err);
+    });
+}

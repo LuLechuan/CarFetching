@@ -55,18 +55,6 @@ function acceptBid(req, res, next) {
     .catch(function (err) {
         return next(err);
     });
-    /*
-    db.one('SELECT car, start_time, source, destination FROM bids WHERE bid_id = $1', bid_id)
-    .then(data => {
-        car = data[0];
-        start_time = data[1];
-        source = data[2];
-        destination = data[3];
-    })
-    .catch(function (err) {
-        return next(err);
-    });
-    */
 
     db.result('UPDATE bids SET status = \'failed\' WHERE car IN (SELECT car FROM bids WHERE bid_id = $1) AND start_time IN (SELECT start_time FROM bids WHERE bid_id = $1) AND source IN (SELECT source FROM bids WHERE bid_id = $1) AND destination IN (SELECT destination FROM bids WHERE bid_id = $1) AND bid_id <> $1', bid_id)
     .catch(function (err) {
@@ -80,18 +68,3 @@ function acceptBid(req, res, next) {
         return next(err);
     });
 }
-
-// function updateBid(req, res, next) {
-//   db.none('UPDATE bids SET amount = $1 where id=$2',
-//     [parseInt(req.body.amount), parseInt(req.params.id)])
-//     .then(function () {
-//       res.status(200)
-//         .json({
-//           status: 'success',
-//           message: 'Updated driver'
-//         });
-//     })
-//     .catch(function (err) {
-//       return next(err);
-//     });
-// }

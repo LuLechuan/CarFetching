@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1 #{title}
+  if errors
+    for each in errors
+      p.error #{each.msg}
+  form(method='post', action='/cars/add_car')
+    .form-group
+      label Plate Number:
+      input(name='plate_number', type='text')
+    .form-group
+      label Model:
+      input(name='model', type='text')
+    .form-group
+      label Capacity:
+      input(name='capacity', type='text')
+    input(type='submit', name='submit', value='Add')
+
+    a(href='/cars') Back

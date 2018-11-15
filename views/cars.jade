@@ -1,7 +1,15 @@
 extends layout
 
 block content
-    ul
-        each car in cars
-            li
-                a(href="#") #{car.plate_number + " " +  car.driver + " " +  car.capacity + " " +  car.model}
+
+  table(class='table table-striped')
+    each car, i in cars
+      tr
+        td Plate Number: #{car.plate_number}
+        td Model: #{car.model}
+        td Capacity: #{car.capacity}
+
+        td
+          a(class="btn btn-tiny btn-danger" href="/cars/remove/#{car.plate_number}") Remove Car
+
+  a(class="btn btn-tiny btn-default" href="/cars/addcar") Add New Car
